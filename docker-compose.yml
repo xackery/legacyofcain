@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mariadb:
+    image: "bitnami/mariadb:latest"
+    volumes:
+      - ./docker/db:/bitnami/mariadb
+    environment:
+   #   MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: eqemu
+      MARIADB_USER: eqemu
+      MARIADB_PASSWORD: eqemupass
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+  nats:
+     image: "nats:latest"
+     ports:
+       - "4222:4222"
+       - "6222:6222"
+       - "8222:8222"
+     expose:
+       - "4222/tcp"
+       - "6222/tcp"
+       - "8222/tcp"
