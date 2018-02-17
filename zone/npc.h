@@ -87,6 +87,28 @@ struct AISpellsVar_Struct {
 	uint8	idle_beneficial_chance;
 };
 
+struct Item_Base {
+	explicit Item_Base(
+		int item_id,
+		int rarity,
+		int class_type,
+		int slot_type,
+		int class_bit,
+		int level) :
+		item_id(item_id),
+		rarity(rarity),
+		class_type(class_type),
+		slot_type(slot_type),
+		class_bit(class_bit),
+		level(level){};
+	int item_id;
+	int rarity;
+	int class_type;
+	int slot_type;
+	int class_bit;
+	int level;
+};
+
 class SwarmPet;
 class Client;
 class Group;
@@ -298,6 +320,12 @@ public:
 	void AddAbilities(const NPCType * d, Spawn2 * in_respawn);
 	bool AddPrefix(int counter, int prefix);
 	bool AddSuffix(int prefix);
+	void DoItemization(Mob * killer);
+	int GetItemLevel(Mob * killer);
+	int GetItemBase(int rarity, int slot_type, int class_type, int item_level);
+	int GetItemProperty(int aug_index, int rarity, int slot_type, int class_type, int item_level);
+	int GetDropCount(Mob * killer);
+	int GetItemRarity(Mob * killer);
 
 	//waypoint crap
 	int					GetMaxWp() const { return max_wp; }

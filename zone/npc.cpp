@@ -2758,17 +2758,17 @@ uint8 NPC::RandomizeCategory(const NPCType* d, Spawn2* in_respawn) {
 	std::map <int, uint8> pool;
 	int pid = 0;
 	pid += normal_chance;
-	pool[pid] = LoC::Normal;
+	pool[pid] = LoC::MobNormal;
 	pid += champion_chance;
-	pool[pid] = LoC::Champion;
+	pool[pid] = LoC::MobChampion;
 	pid += rare_chance;
-	pool[pid] = LoC::Rare;
+	pool[pid] = LoC::MobRare;
 	pid += unique_chance;
-	pool[pid] = LoC::Unique;
+	pool[pid] = LoC::MobUnique;
 	pid += super_unique_chance;
-	pool[pid] = LoC::SuperUnique;
+	pool[pid] = LoC::MobSuperUnique;
 	pid += boss_chance;
-	pool[pid] = LoC::Boss;
+	pool[pid] = LoC::MobBoss;
 
 	int dice = zone->random.Int(1, pid);
 
@@ -2789,11 +2789,11 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	//Level was determined based on the spawngroup, we now adjust it's level with category
 	int levelMod = 0;
 
-	if (cat == LoC::Champion) levelMod = zone->random.Int(1, 5);
-	if (cat == LoC::Rare) levelMod = zone->random.Int(3, 8);
-	if (cat == LoC::Unique) levelMod = zone->random.Int(5, 8);
-	if (cat == LoC::SuperUnique) levelMod = zone->random.Int(9, 15);
-	if (cat == LoC::Boss) levelMod = zone->random.Int(8, 20);	
+	if (cat == LoC::MobChampion) levelMod = zone->random.Int(1, 5);
+	if (cat == LoC::MobRare) levelMod = zone->random.Int(3, 8);
+	if (cat == LoC::MobUnique) levelMod = zone->random.Int(5, 8);
+	if (cat == LoC::MobSuperUnique) levelMod = zone->random.Int(9, 15);
+	if (cat == LoC::MobBoss) levelMod = zone->random.Int(8, 20);
 
 	SetLevel(level + levelMod);
 
@@ -2805,14 +2805,14 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 	int cat = GetCategory();
 	//Add any generic spawn abilities here
-	if (cat == LoC::Normal) return;
+	if (cat == LoC::MobNormal) return;
 
 	int prefixCount = 0;
-	if (cat == LoC::Champion) prefixCount = zone->random.Int(0, 1);
-	if (cat == LoC::Rare) prefixCount = zone->random.Int(1, 2);
-	if (cat == LoC::Unique) prefixCount = zone->random.Int(2, 3);
-	if (cat == LoC::SuperUnique) prefixCount = zone->random.Int(2, 4);
-	if (cat == LoC::Boss) prefixCount = zone->random.Int(2, 4);
+	if (cat == LoC::MobChampion) prefixCount = zone->random.Int(0, 1);
+	if (cat == LoC::MobRare) prefixCount = zone->random.Int(1, 2);
+	if (cat == LoC::MobUnique) prefixCount = zone->random.Int(2, 3);
+	if (cat == LoC::MobSuperUnique) prefixCount = zone->random.Int(2, 4);
+	if (cat == LoC::MobBoss) prefixCount = zone->random.Int(2, 4);
 	if (zone->GetInstanceID() == 1) prefixCount++;
 	if (zone->GetInstanceID() == 2) prefixCount++;
 	int prefixTotal = 0;
@@ -2825,11 +2825,11 @@ void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 	}
 
 	int suffixCount = 0;
-	if (cat == LoC::Champion) suffixCount = zone->random.Int(0, 1);
-	if (cat == LoC::Rare) suffixCount = zone->random.Int(1, 2);
-	if (cat == LoC::Unique) suffixCount = zone->random.Int(2, 3);
-	if (cat == LoC::SuperUnique) suffixCount = zone->random.Int(2, 4);
-	if (cat == LoC::Boss) suffixCount = zone->random.Int(2, 4);
+	if (cat == LoC::MobChampion) suffixCount = zone->random.Int(0, 1);
+	if (cat == LoC::MobRare) suffixCount = zone->random.Int(1, 2);
+	if (cat == LoC::MobUnique) suffixCount = zone->random.Int(2, 3);
+	if (cat == LoC::MobSuperUnique) suffixCount = zone->random.Int(2, 4);
+	if (cat == LoC::MobBoss) suffixCount = zone->random.Int(2, 4);
 	if (zone->GetInstanceID() == 1) suffixCount++;
 	if (zone->GetInstanceID() == 2) suffixCount++;
 	int suffixTotal = 0;
@@ -2841,6 +2841,181 @@ void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 		if (attempts > 100) break;
 	}
 }
+
+
+//DoItemization is called during NPC death
+void NPC::DoItemization(Mob *killer) {
+	int cat = GetCategory();	
+	if (cat < 1) return; //don't itemize non-categorized npcs.
+
+	int difficulty = zone->GetInstanceID();
+
+	int drop_count = GetDropCount(killer);	
+	if (drop_count == 0) return;
+
+	for (int i = 0; i < drop_count; i++) {
+		uint32 item_id = 0;
+		uint32 aug1_id = 0;
+		uint32 aug2_id = 0;
+		uint32 aug3_id = 0;
+		uint32 aug4_id = 0;
+		uint32 aug5_id = 0;
+		uint32 aug6_id = 0;
+
+		int rarity = GetItemRarity(killer);
+		int slot_type = zone->random.Int(0, LoC::SlotMax);
+		if (slot_type == LoC::Hands) slot_type = zone->random.Int(0, LoC::SlotHandsMax);	 //hands are all weapon types, so RNG considers all weapons same grouping
+		int class_type = zone->random.Int(0, LoC::ClassMax);
+		int item_level = GetItemLevel(killer);
+		item_id = GetItemBase(rarity, slot_type, class_type, item_level);
+		//aug1_id = GetItemProperty(1, rarity, slot_type, class_type, item_level);
+		aug2_id = GetItemProperty(1, rarity, slot_type, class_type, item_level);
+		aug3_id = GetItemProperty(1, rarity, slot_type, class_type, item_level);
+		aug4_id = GetItemProperty(1, rarity, slot_type, class_type, item_level);
+		aug5_id = GetItemProperty(1, rarity, slot_type, class_type, item_level);
+		aug6_id = GetItemProperty(1, rarity, slot_type, class_type, item_level);
+
+		if (item_id == 0) return;
+		AddItem(item_id, 1, false, aug1_id, aug2_id, aug3_id, aug4_id, aug5_id, aug6_id);
+	}
+	return;
+}
+
+
+
+int NPC::GetItemLevel(Mob *killer) {
+	int item_level = 0;
+
+	return item_level;
+}
+
+
+//GetDropCount determines how many drops a mob dropped, and is called by DoItemization
+int NPC::GetDropCount(Mob *killer) {
+	int difficulty = zone->GetInstanceID();
+	//Drop count is weighted to lean towards less more than more.
+	int drop_1_chance = 0;
+	if (difficulty == LoC::Normal) drop_1_chance = RuleI(NPC, ItemDrop1ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_1_chance = RuleI(NPC, ItemDrop1ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_1_chance = RuleI(NPC, ItemDrop1ChanceHell);
+	int drop_2_chance = 0;
+	if (difficulty == LoC::Normal) drop_2_chance = RuleI(NPC, ItemDrop2ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_2_chance = RuleI(NPC, ItemDrop2ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_2_chance = RuleI(NPC, ItemDrop2ChanceHell);
+	int drop_3_chance = 0;
+	if (difficulty == LoC::Normal) drop_3_chance = RuleI(NPC, ItemDrop3ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_3_chance = RuleI(NPC, ItemDrop3ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_3_chance = RuleI(NPC, ItemDrop3ChanceHell);
+	int drop_4_chance = 0;
+	if (difficulty == LoC::Normal) drop_4_chance = RuleI(NPC, ItemDrop4ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_4_chance = RuleI(NPC, ItemDrop4ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_4_chance = RuleI(NPC, ItemDrop4ChanceHell);
+	int drop_5_chance = 0;
+	if (difficulty == LoC::Normal) drop_5_chance = RuleI(NPC, ItemDrop5ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_5_chance = RuleI(NPC, ItemDrop5ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_5_chance = RuleI(NPC, ItemDrop5ChanceHell);
+	int drop_6_chance = 0;
+	if (difficulty == LoC::Normal) drop_6_chance = RuleI(NPC, ItemDrop6ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_6_chance = RuleI(NPC, ItemDrop6ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_6_chance = RuleI(NPC, ItemDrop6ChanceHell);
+
+	//Tally up chances
+	std::map <int, uint8> pool;
+	int pid = 0;
+	if (drop_1_chance > 0) {
+		pid += drop_1_chance;
+		pool[pid] = 1;
+	}
+	if (drop_2_chance > 0) {
+		pid += drop_2_chance;
+		pool[pid] = 2;
+	}
+	if (drop_3_chance > 0) {
+		pid += drop_3_chance;
+		pool[pid] = 3;
+	}
+	if (drop_4_chance > 0) {
+		pid += drop_4_chance;
+		pool[pid] = 4;
+	}
+	if (drop_5_chance > 0) {
+		pid += drop_5_chance;
+		pool[pid] = 5;
+	}
+	if (drop_6_chance > 0) {
+		pid += drop_6_chance;
+		pool[pid] = 6;
+	}
+
+	int dice = zone->random.Int(1, pid);
+
+	int lastPool = 0;
+	for (auto entry = pool.begin(); entry != pool.end(); ++entry) {
+		if (dice > entry->first) {
+			lastPool = entry->first;
+			continue;
+		}
+		return entry->second;
+	}
+	return 0; //none by default
+}
+
+//GetItemRarity is called by DoItemization, and is determined during a mob's death for magic calculations
+int NPC::GetItemRarity(Mob *killer) {
+	int difficulty = zone->GetInstanceID();
+
+	int common_chance = 0;
+	if (difficulty == LoC::Normal) common_chance = RuleI(NPC, ItemCommonChanceNormal);
+	if (difficulty == LoC::Nightmare) common_chance = RuleI(NPC, ItemCommonChanceNightmare);
+	if (difficulty == LoC::Hell) common_chance = RuleI(NPC, ItemCommonChanceHell);
+	int uncommon_chance = 0;
+	if (difficulty == LoC::Normal) uncommon_chance = RuleI(NPC, ItemUncommonChanceNormal);
+	if (difficulty == LoC::Nightmare) uncommon_chance = RuleI(NPC, ItemUncommonChanceNightmare);
+	if (difficulty == LoC::Hell) uncommon_chance = RuleI(NPC, ItemUncommonChanceHell);
+	int rare_chance = 0;
+	if (difficulty == LoC::Normal) rare_chance = RuleI(NPC, ItemRareChanceNormal);
+	if (difficulty == LoC::Nightmare) rare_chance = RuleI(NPC, ItemRareChanceNightmare);
+	if (difficulty == LoC::Hell) rare_chance = RuleI(NPC, ItemRareChanceHell);
+	int legendary_chance = 0;
+	if (difficulty == LoC::Normal) legendary_chance = RuleI(NPC, ItemLegendaryChanceNormal);
+	if (difficulty == LoC::Nightmare) legendary_chance = RuleI(NPC, ItemLegendaryChanceNightmare);
+	if (difficulty == LoC::Hell) legendary_chance = RuleI(NPC, ItemLegendaryChanceHell);
+	int unique_chance = 0;
+	if (difficulty == LoC::Normal) unique_chance = RuleI(NPC, ItemUniqueChanceNormal);
+	if (difficulty == LoC::Nightmare) unique_chance = RuleI(NPC, ItemUniqueChanceNightmare);
+	if (difficulty == LoC::Hell) unique_chance = RuleI(NPC, ItemUniqueChanceHell);
+
+	//Add Magic Find modifiers here. Killer is referenced as an argument, 
+	//so we can iterate group to calculate magic find bonuses, boosting non-common items.
+
+
+	//Tally up chances
+	std::map <int, uint8> pool;
+	int pid = 0;
+	pid += common_chance;
+	pool[pid] = LoC::Common;
+	pid += uncommon_chance;
+	pool[pid] = LoC::Uncommon;
+	pid += rare_chance;
+	pool[pid] = LoC::Rare;
+	pid += legendary_chance;
+	pool[pid] = LoC::Legendary;
+	pid += unique_chance;
+	pool[pid] = LoC::Unique;
+
+	int dice = zone->random.Int(1, pid);
+
+	int lastPool = 0;
+	for (auto entry = pool.begin(); entry != pool.end(); ++entry) {
+		if (dice > entry->first) {
+			lastPool = entry->first;
+			continue;
+		}
+		return entry->second;
+	}
+	return LoC::Common; //common by default
+}
+
 
 
 bool NPC::AddPrefix(int counter, int prefix) {

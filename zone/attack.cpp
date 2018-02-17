@@ -2239,7 +2239,8 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 		respawn2->DeathReset(1);
 	}
 
-	AddItem(1001, 1, false, 1002, 1003, 1004, 1005, 1006, 1007);
+	DoItemization(killer_mob);
+
 
 	if (killer_mob && GetClass() != LDON_TREASURE)
 		hate_list.AddEntToHateList(killer_mob, damage);

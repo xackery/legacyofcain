@@ -29,12 +29,51 @@
 
 namespace LoC {
 	enum MobType {
-		Normal = 0,
-		Champion,
-		Rare,
-		Unique,
-		SuperUnique,
-		Boss,
+		MobNormal = 0,
+		MobChampion,
+		MobRare,
+		MobUnique,
+		MobSuperUnique,
+		MobBoss,
+	};
+	enum SlotType {
+		Ear = 0,
+		Neck,
+		Face,
+		Head,
+		Fingers,
+		Wrist,
+		Arms,
+		Hands,
+		Shoulders,
+		Chest,
+		Back,
+		Waist,
+		Legs,
+		Feet,
+		Charm,
+		PowerSource,
+		Held,
+		SlotMax,
+	};
+	enum SlotHandsType {
+		OneHB = 0,
+		TwoHB,
+		OneHS,
+		TwoHS,
+		Archery,
+		Throwing,
+		OneHP,
+		TwoHP,
+		Shield,
+		SlotHandsMax,
+	};
+	enum ClassType {
+		Tank = 0,
+		Support,
+		Damage,
+		Caster,
+		ClassMax,
 	};
 	enum PrefixType {
 		PrefixGloom,
@@ -201,6 +240,26 @@ namespace LoC {
 		SuffixStoneSkin,
 		SuffixTeleporting,
 		SuffixMax,
+	};
+	enum RarityType {
+		Common = 0,
+		Uncommon,
+		Rare,
+		Legendary,
+		Unique,
+		RarityMax,
+	};
+	enum ItemGroupType {
+		//All slots fall under the generic item group.
+		Generic = 0,
+		//Weapon procs, etc
+		Hand,
+		ItemGroupMax,
+	};
+	enum DifficultyType {
+		Normal = 0,
+		Nightmare,
+		Hell,
 	};
 }
 
