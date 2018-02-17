@@ -350,6 +350,23 @@ bool WorldDatabase::GetStartZone(PlayerProfile_Struct* in_pp, CharCreate_Struct*
 	if(!in_pp || !in_cc)
 		return false;
 
+	// Override start zone if the rule is defined
+	if (RuleI(WORLD, StartZoneID) > 0) {
+		in_pp->zone_id = RuleI(WORLD, StartZoneID);
+		in_pp->x = RuleR(World, StartZoneX);
+		in_pp->y = RuleR(World, StartZoneY);
+		in_pp->z = RuleR(World, StartZoneZ);
+		in_pp->heading = RuleR(World, StartZoneHeading);
+		
+		in_pp->binds[0].x = in_pp->x;
+		in_pp->binds[0].y = in_pp->y;
+		in_pp->binds[0].z = in_pp->z;
+		in_pp->binds[0].zoneId = in_pp->zone_id;
+		in_pp->binds[0].instance_id = 0;
+
+		return true;
+	}
+
 	in_pp->x = in_pp->y = in_pp->z = in_pp->heading = in_pp->zone_id = 0;
 	in_pp->binds[0].x = in_pp->binds[0].y = in_pp->binds[0].z = in_pp->binds[0].zoneId = in_pp->binds[0].instance_id = 0;
 	// see if we have an entry for start_zone. We can support both titanium & SOF+ by having two entries per class/race/deity combo with different zone_ids

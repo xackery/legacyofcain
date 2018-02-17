@@ -239,6 +239,11 @@ RULE_BOOL (World, IPLimitDisconnectAll, false)
 RULE_BOOL(World, MaxClientsSimplifiedLogic, false) // New logic that only uses ExemptMaxClientsStatus and MaxClientsPerIP. Done on the loginserver. This mimics the P99-style special IP rules.
 RULE_INT (World, TellQueueSize, 20)
 RULE_BOOL(World, StartZoneSameAsBindOnCreation, true) //Should the start zone ALWAYS be the same location as your bind?
+RULE_INT(World, StartZoneID, 0) // Indicates an override for player starting zone (ignores chracter creation data)
+RULE_REAL(World, StartZoneX, 0) // X Position to use if using StartZoneID
+RULE_REAL(World, StartZoneY, 0) // Y Position to use if using StartZoneID
+RULE_REAL(World, StartZoneZ, 0) // Z Position to use if using StartZoneID
+RULE_REAL(World, StartZoneHeading, 0) // Heading to use if using StartZoneID
 RULE_CATEGORY_END()
 
 RULE_CATEGORY(Zone)
