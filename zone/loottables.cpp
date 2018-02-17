@@ -446,23 +446,13 @@ void NPC::AddItem(uint32 itemid, uint16 charges, bool equipitem, uint32 aug1, ui
 }
 
 void NPC::AddLootTable() {
-	if (npctype_id != 0) { // check if it's a GM spawn
-		database.AddLootTableToNPC(this,loottable_id, &itemlist, &copper, &silver, &gold, &platinum);
-	}
 }
 
-void NPC::AddLootTable(uint32 ldid) {
-	if (npctype_id != 0) { // check if it's a GM spawn
-	  database.AddLootTableToNPC(this,ldid, &itemlist, &copper, &silver, &gold, &platinum);
-	}
+void NPC::AddLootTable(uint32 ldid) {	
 }
 
 void NPC::CheckGlobalLootTables()
 {
-	auto tables = zone->GetGlobalLootTables(this);
-
-	for (auto &id : tables)
-		database.AddLootTableToNPC(this, id, &itemlist, nullptr, nullptr, nullptr, nullptr);
 }
 
 void ZoneDatabase::LoadGlobalLoot()
