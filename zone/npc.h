@@ -288,6 +288,17 @@ public:
 
 	void Hijack(const NPCType * d, Spawn2 * in_respawn);
 
+	int GetRandomizeType(const NPCType * d, Spawn2 * in_respawn);
+
+	uint8 RandomizeCategory(const NPCType * d, Spawn2 * in_respawn);
+
+	void AdjustNormal(const NPCType * d, Spawn2 * in_respawn);
+	void AdjustChampion(const NPCType * d, Spawn2 * in_respawn);
+	void AdjustStats(const NPCType * d, Spawn2 * in_respawn);
+	void AddAbilities(const NPCType * d, Spawn2 * in_respawn);
+	bool AddPrefix(int counter, int prefix);
+	bool AddSuffix(int prefix);
+
 	//waypoint crap
 	int					GetMaxWp() const { return max_wp; }
 	void				DisplayWaypointInfo(Client *to);
