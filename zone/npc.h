@@ -286,6 +286,8 @@ public:
 
 	void ModifyStatsOnCharm(bool bRemoved);
 
+	void Hijack(const NPCType * d, Spawn2 * in_respawn);
+
 	//waypoint crap
 	int					GetMaxWp() const { return max_wp; }
 	void				DisplayWaypointInfo(Client *to);

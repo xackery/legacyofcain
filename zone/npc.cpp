@@ -387,6 +387,7 @@ NPC::NPC(const NPCType* d, Spawn2* in_respawn, const glm::vec4& position, int if
 		ldon_locked_skill = 0;
 		ldon_trap_detected = 0;
 	}
+
 	reface_timer = new Timer(15000);
 	reface_timer->Disable();
 	qGlobals = nullptr;
@@ -396,6 +397,8 @@ NPC::NPC(const NPCType* d, Spawn2* in_respawn, const glm::vec4& position, int if
 	raid_target = d->raid_target;
 	ignore_despawn = d->ignore_despawn;
 	m_targetable = !d->untargetable;
+
+	Hijack(d, in_respawn);
 }
 
 NPC::~NPC()
@@ -2698,3 +2701,15 @@ void NPC::ModifyStatsOnCharm(bool bRemoved)
 	CalcAC();
 }
 
+
+void NPC::Hijack(const NPCType* d, Spawn2* in_respawn) {
+	if (in_respawn && in_respawn->SpawnGroupID() >= 1151 && in_respawn->SpawnGroupID() <= 1256) {
+		SetName(StringFormat("a weak %s", name).c_str());
+		ChangeCategory(1);
+		SetLevel(10);
+		npc_spells_id = 32;
+		roambox_delay = zone->random.Int(5000, 15000);
+		roambox_min_delay = zone->random.Int(2500, 5000);
+		roambox_distance = zone->random.Int(5, 50);
+	}
+}

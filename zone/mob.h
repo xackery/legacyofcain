@@ -426,6 +426,7 @@ public:
 	virtual inline uint8 GetBaseGender() const { return base_gender; }
 	virtual inline uint16 GetDeity() const { return deity; }
 	virtual EQEmu::deity::DeityTypeBit GetDeityBit() { return EQEmu::deity::ConvertDeityTypeToDeityTypeBit((EQEmu::deity::DeityType)deity); }
+	inline uint8 GetCategory() const { return mob_category; }
 	inline uint16 GetRace() const { return race; }
 	inline uint8 GetGender() const { return gender; }
 	inline uint8 GetTexture() const { return texture; }
@@ -440,6 +441,7 @@ public:
 	inline uint8 GetDrakkinHeritage() const { return drakkin_heritage; }
 	inline uint8 GetDrakkinTattoo() const { return drakkin_tattoo; }
 	inline uint8 GetDrakkinDetails() const { return drakkin_details; }
+	inline void ChangeCategory(uint8 in) { mob_category = in; }
 	inline void ChangeRace(uint16 in) { race = in; }
 	inline void ChangeGender(uint8 in) { gender = in;}
 	inline void ChangeTexture(uint8 in) { texture = in; }
@@ -1237,6 +1239,7 @@ protected:
 	void SendAddPlayerState(PlayerState new_state);
 	void SendRemovePlayerState(PlayerState old_state);
 
+	uint8 mob_category;
 	uint8 gender;
 	uint16 race;
 	uint8 base_gender;

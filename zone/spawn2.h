@@ -49,6 +49,7 @@ public:
 	void	DeathReset(bool realdeath = 0); //resets the spawn in the case the npc dies, also updates db if needed
 
 	void	SpawnConditionChanged(const SpawnCondition &c, int16 old_value);
+	void HijackSpawn(NPC * npc, uint32 spawn2_id);
 	uint32	GetID()		{ return spawn2_id; }
 	float	GetX()		{ return x; }
 	float	GetY()		{ return y; }
