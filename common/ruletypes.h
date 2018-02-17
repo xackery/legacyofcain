@@ -121,6 +121,7 @@ RULE_BOOL(Character, EnableDiscoveredItems, true) // If enabled, it enables EVEN
 RULE_BOOL(Character, EnableXTargetting, true) // Enable Extended Targetting Window, for users with UF and later clients.
 RULE_BOOL(Character, EnableAggroMeter, true) // Enable Aggro Meter, for users with RoF and later clients.
 RULE_BOOL(Character, KeepLevelOverMax, false) // Don't delevel a character that has somehow gone over the level cap
+RULE_BOOL(Character, FoodLoss, true) // Whether or not you lose food/water on stamina update
 RULE_INT(Character, FoodLossPerUpdate, 32) // How much food/water you lose per stamina update
 RULE_BOOL(Character, EnableHungerPenalties, false) // being hungry/thirsty has negative effects -- it does appear normal live servers do not have penalties
 RULE_INT(Character, BaseInstrumentSoftCap, 36) // Softcap for instrument mods, 36 commonly referred to as "3.6" as well.
