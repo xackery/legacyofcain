@@ -416,6 +416,7 @@ public:
 	void	mod_npc_killed_merit(Mob* c);
 	void	mod_npc_killed(Mob* oos);
 	void	AISpellsList(Client *c);
+	bool	DoRoaming();
 	uint16 GetInnateProcSpellID() const { return innate_proc_spell_id; }
 
 	uint32	GetHeroForgeModel() const { return herosforgemodel; }

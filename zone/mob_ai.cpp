@@ -1551,50 +1551,8 @@ void NPC::AI_DoMovement() {
 	if(walksp <= 0.0f)
 		return;	//this is idle movement at walk speed, and we are unable to walk right now.
 
-	if (roambox_distance > 0) {
-		if (
-			roambox_movingto_x > roambox_max_x
-			|| roambox_movingto_x < roambox_min_x
-			|| roambox_movingto_y > roambox_max_y
-			|| roambox_movingto_y < roambox_min_y
-			)
-		{
-			float movedist = roambox_distance*roambox_distance;
-			float movex = zone->random.Real(0, movedist);
-			float movey = movedist - movex;
-			movex = sqrtf(movex);
-			movey = sqrtf(movey);
-			movex *= zone->random.Int(0, 1) ? 1 : -1;
-			movey *= zone->random.Int(0, 1) ? 1 : -1;
-			roambox_movingto_x = GetX() + movex;
-			roambox_movingto_y = GetY() + movey;
-			//Try to calculate new coord using distance.
-			if (roambox_movingto_x > roambox_max_x || roambox_movingto_x < roambox_min_x)
-				roambox_movingto_x -= movex * 2;
-			if (roambox_movingto_y > roambox_max_y || roambox_movingto_y < roambox_min_y)
-				roambox_movingto_y -= movey * 2;
-			//New coord is still invalid, ignore distance and just pick a new random coord.
-			//If we're here we may have a roambox where one side is shorter than the specified distance. Commons, Wkarana, etc.
-			if (roambox_movingto_x > roambox_max_x || roambox_movingto_x < roambox_min_x)
-				roambox_movingto_x = zone->random.Real(roambox_min_x+1,roambox_max_x-1);
-			if (roambox_movingto_y > roambox_max_y || roambox_movingto_y < roambox_min_y)
-				roambox_movingto_y = zone->random.Real(roambox_min_y+1,roambox_max_y-1);
-			Log(Logs::Detail, Logs::AI, 
-				"Roam Box: d=%.3f (%.3f->%.3f,%.3f->%.3f): Go To (%.3f,%.3f)",
-				roambox_distance, roambox_min_x, roambox_max_x, roambox_min_y, 
-				roambox_max_y, roambox_movingto_x, roambox_movingto_y);
-		}
-
-		// Keep calling with updates, using wherever we are in Z.
-		if (!MakeNewPositionAndSendUpdate(roambox_movingto_x, 
-				roambox_movingto_y, m_Position.z, walksp))
-		{
-			this->FixZ(); // FixZ on final arrival point.
-			roambox_movingto_x = roambox_max_x + 1; // force update
-			pLastFightingDelayMoving = Timer::GetCurrentTime() + RandomTimer(roambox_min_delay, roambox_delay);
-			SetMoving(false);
-			SendPosition();	// makes mobs stop clientside
-		}
+	if (DoRoaming()) {
+		return;
 	}
 	else if (roamer)
 	{
@@ -1603,7 +1561,6 @@ void NPC::AI_DoMovement() {
 			movetimercompleted=true;
 			AI_walking_timer->Disable();
 		}
-
 
 		int32 gridno = CastToNPC()->GetGrid();
 
@@ -2889,3 +2846,46 @@ uint32 ZoneDatabase::GetMaxNPCSpellsEffectsID() {
     return atoi(row[0]);
 }
 
+bool NPC::DoRoaming() {
+	bool doRoaming = false;
+	if (roambox_distance > 0) doRoaming = true;
+	if (!doRoaming) return false;
+	float walksp = GetMovespeed();
+
+	
+	if (AI_walking_timer->Enabled()) {
+		if (!AI_walking_timer->Check()) return true;
+		AI_walking_timer->Disable();
+	}
+
+	if (m_CurrentWayPoint.z == 0) { //do we need to calculate a new point?
+		m_CurrentWayPoint.z = 1;
+		float movedist = roambox_distance * roambox_distance;
+		float movex = zone->random.Real(0, movedist);
+		float movey = movedist - movex;
+		movex = sqrtf(movex);
+		movey = sqrtf(movey);
+		movex *= zone->random.Int(0, 1) ? 1 : -1;
+		movey *= zone->random.Int(0, 1) ? 1 : -1;
+
+		roambox_movingto_x = m_SpawnPoint.x + movex;
+		roambox_movingto_y = m_SpawnPoint.y + movey;
+		m_CurrentWayPoint.x = roambox_movingto_x;
+		m_CurrentWayPoint.y = roambox_movingto_y;
+	}
+
+	if (m_CurrentWayPoint.x == GetX() && m_CurrentWayPoint.y == GetY()) {
+		//We have reached a destination.
+		SetAppearance(eaStanding, false);
+		SetMoving(false);
+		this->FixZ();
+		SendPosition();
+		m_CurrentWayPoint.z = 0;
+		AI_walking_timer->Start(zone->random.Int(roambox_min_delay, roambox_delay));
+		return true;
+	}
+	
+	this->FixZ(); //costly, but let's see.
+	CalculateNewPosition2(m_CurrentWayPoint.x, m_CurrentWayPoint.y, GetZ(), walksp, true);
+	return true;
+}
