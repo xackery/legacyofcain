@@ -2863,7 +2863,6 @@ void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 //DoItemization is called during NPC death
 void NPC::DoItemization(Mob *killer) {
 	int cat = GetCategory();	
-	if (cat < 1) return; //don't itemize non-categorized npcs.
 	if (killer == NULL) return; //don't bother itemizing if we don't know who killer was
 
 	int difficulty = zone->GetInstanceID();
