@@ -2239,7 +2239,6 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 		respawn2->DeathReset(1);
 	}
 
-	DoItemization(killer_mob);
 
 
 	if (killer_mob && GetClass() != LDON_TREASURE)
@@ -2250,6 +2249,7 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 	if (give_exp == nullptr)
 		give_exp = killer;
 
+	DoItemization(give_exp);
 	if (give_exp && give_exp->HasOwner()) {
 
 		bool ownerInGroup = false;
@@ -2293,6 +2293,8 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 
 		int32 finalxp = give_exp_client->GetExperienceForKill(this);
 		finalxp = give_exp_client->mod_client_xp(finalxp, this);
+		finalxp = AdjustExperience(finalxp, give_exp);
+		
 
 		if (kr) {
 			if (!IsLdonTreasure && MerchantType == 0) {

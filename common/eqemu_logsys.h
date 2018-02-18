@@ -68,6 +68,15 @@ namespace LoC {
 		Shield,
 		SlotHandsMax,
 	};
+	enum SlotGroupType {
+		All = 1,
+		SlotGroupHands,
+		SlotGroupHead,
+		SlotGroupBoots,
+		SlotGroupBody,
+		SlotGroupWeapons,
+		SlotGroupBelt,
+	};
 	enum ClassType {
 		Tank = 0,
 		Support,

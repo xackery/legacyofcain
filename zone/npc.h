@@ -109,6 +109,23 @@ struct Item_Base {
 	int level;
 };
 
+
+struct Item_Property {
+	explicit Item_Property (
+		int item_id,
+		int level,
+		int group_type,
+		int slot_group_type) :
+		item_id(item_id),
+		level(level),
+		group_type(group_type),
+		slot_group_type(slot_group_type) {};
+	int item_id;
+	int level;
+	int group_type;
+	int slot_group_type;	
+};
+
 class SwarmPet;
 class Client;
 class Group;
@@ -326,6 +343,8 @@ public:
 	int GetItemProperty(int aug_index, int rarity, int slot_type, int class_type, int item_level);
 	int GetDropCount(Mob * killer);
 	int GetItemRarity(Mob * killer);
+
+	int32 AdjustExperience(int base_exp, Mob * killer);
 
 	//waypoint crap
 	int					GetMaxWp() const { return max_wp; }
