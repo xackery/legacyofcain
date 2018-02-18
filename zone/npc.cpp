@@ -2724,6 +2724,7 @@ int NPC::GetRandomizeType(const NPCType* d, Spawn2* in_respawn) {
 	//befallen
 	if (sgid == 112 || sgid == 6831 || sgid == 13103 || sgid == 48348) return 0;
 
+	if (d->class_ > 16) return 0; //weird classes are not randomized
 	return 1;
 }
 
