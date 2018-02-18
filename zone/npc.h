@@ -114,16 +114,19 @@ struct Item_Property {
 	explicit Item_Property (
 		int item_id,
 		int level,
-		int group_type,
-		int slot_group_type) :
+		int aug_index,
+		int slot_group_type,
+		int weight) :
 		item_id(item_id),
 		level(level),
-		group_type(group_type),
-		slot_group_type(slot_group_type) {};
+		aug_index(aug_index),
+		slot_group_type(slot_group_type),
+		weight(weight) {};
 	int item_id;
 	int level;
-	int group_type;
+	int aug_index;
 	int slot_group_type;	
+	int weight;
 };
 
 class SwarmPet;
