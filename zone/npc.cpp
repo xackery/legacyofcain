@@ -2887,10 +2887,11 @@ void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 	int prefixTotal = 0;
 	int attempts = 0;
 
+	// This does not work as expected. Commenting out til it's implemented correctly.
 	// Remove leading "a " from name
-	if (strncmp(GetName(), "a ", 2)) {
-		strn0cpy(name, GetName() + 2, 64);
-	}
+	//if (strncmp(GetName(), "a ", 2)) {
+	//	strn0cpy(name, GetName() + 2, 64);
+	//}
 
 	while (prefixTotal < prefixCount) {
 		int prefix = zone->random.Int(0, LoC::PrefixMax);
