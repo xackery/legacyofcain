@@ -1871,6 +1871,11 @@ void Client::DoStaminaHungerUpdate()
 		// No auto food/drink consumption in the Bazaar
 		sta->food = 6000;
 		sta->water = 6000;
+		// Set hunger and thirst to maximum if there is no food loss
+		if (!RuleB(Character, FoodLoss)) {
+			m_pp.hunger_level = 6000;
+			m_pp.thirst_level = 6000;
+		}
 	}
 
 	Log(Logs::General, Logs::Food,
