@@ -2825,7 +2825,9 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	}
 
 	cur_hp = max_hp;
-	max_dmg += level * 2;
+	min_dmg = 0;
+	max_dmg = 0;
+	CalcNPCDamage();
 
 	if (cat == LoC::MobChampion) {
 		min_damage *= 2;
