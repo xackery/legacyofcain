@@ -3237,7 +3237,8 @@ void Client::Handle_OP_AugmentItem(const EQApplicationPacket *app)
 
 				// RoF client does not require an augmentation solvent for destroying an augmentation in an item.
 				// Augments can be destroyed with a right click -> Destroy at any time.
-
+			Message(13, "Augments cannot be destroyed.");
+			return;
 			aug = tobe_auged->GetAugment(in_augment->augment_index);
 			if (aug)
 			{
