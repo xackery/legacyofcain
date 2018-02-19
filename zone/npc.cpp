@@ -2810,7 +2810,6 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	if (cat == LoC::MobBoss) levelMod = zone->random.Int(8, 20);
 	SetLevel(level + levelMod);
 
-	LevelScale();
 	CalcNPCResists();
 	CalcNPCRegen();
 	
