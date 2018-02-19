@@ -464,8 +464,8 @@ public:
 	inline const char* GetOrigName() const { return orig_name; }
 	inline const char* GetLastName() const { return lastname; }
 	inline void SetLastName(const char *new_name = nullptr) {
-		new_name ? strn0cpy(name, new_name, 64) :
-			strn0cpy(name, GetName(), 64); return;
+		new_name ? strn0cpy(lastname, new_name, 64) :
+			strn0cpy(lastname, GetLastName(), 64); return;
 	};
 	const char *GetCleanName();
 	virtual void SetName(const char *new_name = nullptr) { new_name ? strn0cpy(name, new_name, 64) :
