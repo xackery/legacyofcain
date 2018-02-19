@@ -2813,9 +2813,24 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	LevelScale();
 	CalcNPCResists();
 	CalcNPCRegen();
+	
+	uint8 random_level = (zone->random.Int(level, maxlevel));
+
+	if (zone->GetZoneID() < 200 || level < 48) {
+		max_hp += (random_level - level) * 20;
+		base_hp += (random_level - level) * 20;
+	}
+	else {
+		max_hp += (random_level - level) * 100;
+		base_hp += (random_level - level) * 100;
+	}
+
+	cur_hp = max_hp;
+	max_dmg += (random_level - level) * 2;
 
 	if (cat == LoC::MobChampion) {
 		min_damage *= 2;
+		max_dmg *= 2;
 		max_hp *= 2;
 		size += 1.0f;
 		SetLastName("Champion");
@@ -2823,24 +2838,28 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 
 	if (cat == LoC::MobRare) {
 		min_damage *= 3;
+		max_dmg *= 3;
 		max_hp *= 3;
 		size += 1.2f;
 		SetLastName("Rare");
 	}
 	if (cat == LoC::MobUnique) {
 		min_damage *= 3;
+		max_dmg *= 3;
 		max_hp *= 3;
 		size += 1.8f;
 		SetLastName("Unique");
 	}
 	if (cat == LoC::MobSuperUnique) {
 		min_damage *= 3;
+		max_dmg *= 3;
 		max_hp *= 3;
 		size += 2.1f;
 		SetLastName("Super Unique");
 	}
 	if (cat == LoC::MobBoss) {
 		min_damage *= 4;
+		max_dmg *= 4;
 		max_hp *= 4;
 		size += 3.0f;
 		SetLastName("Boss");
