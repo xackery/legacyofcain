@@ -2816,12 +2816,12 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	
 
 	if (zone->GetZoneID() < 200 || level < 48) {
-		max_hp += level * 20;
-		base_hp += level * 20;
+		max_hp += level * 10;
+		base_hp += level * 10;
 	}
 	else {
-		max_hp += level * 100;
-		base_hp += level * 100;
+		max_hp += level * 50;
+		base_hp += level * 50;
 	}
 
 	cur_hp = max_hp;
@@ -2868,6 +2868,7 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	roambox_delay = zone->random.Int(1000, 10000);
 	roambox_min_delay = zone->random.Int(500, 1000);
 	roambox_distance = zone->random.Int(5, 50);
+	
 }
 
 void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
