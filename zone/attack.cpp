@@ -2295,9 +2295,6 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 		finalxp = give_exp_client->mod_client_xp(finalxp, this);
 		finalxp = AdjustExperience(finalxp, give_exp);
 		
-		if (GetCategory() == 0) {
-			finalxp = 0; //when there's no category set for mob, let's turn it into zero experience.
-		}
 
 		if (kr) {
 			if (!IsLdonTreasure && MerchantType == 0) {
