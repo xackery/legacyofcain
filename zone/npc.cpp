@@ -2816,12 +2816,12 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	
 
 	if (zone->GetZoneID() < 200 || level < 48) {
-		max_hp += level * 10;
-		base_hp += level * 10;
+		max_hp = level * 10;
+		base_hp = level * 10;
 	}
 	else {
-		max_hp += level * 50;
-		base_hp += level * 50;
+		max_hp = level * 50;
+		base_hp = level * 50;
 	}
 
 	cur_hp = max_hp;
