@@ -2920,6 +2920,10 @@ int NPC::GetItemLevel(Mob *killer) {
 int NPC::GetDropCount(Mob *killer) {
 	int difficulty = zone->GetInstanceID();
 	//Drop count is weighted to lean towards less more than more.
+	int drop_0_chance = 0;
+	if (difficulty == LoC::Normal) drop_0_chance = RuleI(NPC, ItemDrop0ChanceNormal);
+	if (difficulty == LoC::Nightmare) drop_0_chance = RuleI(NPC, ItemDrop0ChanceNightmare);
+	if (difficulty == LoC::Hell) drop_0_chance = RuleI(NPC, ItemDrop0ChanceHell);
 	int drop_1_chance = 0;
 	if (difficulty == LoC::Normal) drop_1_chance = RuleI(NPC, ItemDrop1ChanceNormal);
 	if (difficulty == LoC::Nightmare) drop_1_chance = RuleI(NPC, ItemDrop1ChanceNightmare);
@@ -2948,6 +2952,10 @@ int NPC::GetDropCount(Mob *killer) {
 	//Tally up chances
 	std::map <int, uint8> pool;
 	int pid = 0;
+	if (drop_0_chance > 0) {
+		pid += drop_0_chance;
+		pool[pid] = 0;
+	}
 	if (drop_1_chance > 0) {
 		pid += drop_1_chance;
 		pool[pid] = 1;
