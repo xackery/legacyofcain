@@ -2810,6 +2810,10 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	if (cat == LoC::MobBoss) levelMod = zone->random.Int(8, 20);
 	SetLevel(level + levelMod);
 
+	LevelScale();
+	CalcNPCResists();
+	CalcNPCRegen();
+
 	if (cat == LoC::MobChampion) {
 		min_damage *= 2;
 		max_hp *= 2;
@@ -2841,6 +2845,7 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 		size += 3.0f;
 		SetLastName("Boss");
 	}
+	SetHP(GetMaxHP());
 
 	roambox_delay = zone->random.Int(1000, 10000);
 	roambox_min_delay = zone->random.Int(500, 1000);
