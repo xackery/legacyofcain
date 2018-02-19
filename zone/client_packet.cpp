@@ -811,6 +811,10 @@ void Client::CompleteConnect()
 		}
 	}
 
+	if (m_pp.birthday > time(nullptr) - 120) { //If they're less than 2 minutes old
+		UpdateSkillsAndSpells();
+	}
+
 	if (zone) {
 		if (zone->GetInstanceTimer()) {
 			uint32 ttime = zone->GetInstanceTimer()->GetRemainingTime();
