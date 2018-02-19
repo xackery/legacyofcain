@@ -2862,6 +2862,12 @@ void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 	if (zone->GetInstanceID() == 2) prefixCount++;
 	int prefixTotal = 0;
 	int attempts = 0;
+
+	// Remove leading "a " from name
+	if (strncmp(GetName(), "a ", 2)) {
+		strn0cpy(name, GetName() + 2, 64);
+	}
+
 	while (prefixTotal < prefixCount) {
 		int prefix = zone->random.Int(0, LoC::PrefixMax);
 		if (AddPrefix((prefixTotal == prefixCount+1)?0:1, prefix)) prefixTotal++;
@@ -3098,215 +3104,215 @@ int32 NPC::AdjustExperience(int base_exp, Mob *killer) {
 bool NPC::AddPrefix(int counter, int prefix) {
 	if (strlen(name) > 20) return false;
 	if (prefix == LoC::PrefixGloom) {
-		SetName(StringFormat("%sloom %s", (counter == 0) ? "G" : "g", name).c_str());
+		SetName(StringFormat("%sloom_%s", (counter == 0) ? "G" : "g", name).c_str());
 		npc_spells_id = 167; //black reaver
 	}
 	if (prefix == LoC::PrefixGray) {
-		SetName(StringFormat("%sray %s", (counter == 0) ? "G" : "g", name).c_str());
+		SetName(StringFormat("%sray_%s", (counter == 0) ? "G" : "g", name).c_str());
 		npc_spells_id = 1401;
 	}
 	if (prefix == LoC::PrefixDire) {
-		SetName(StringFormat("%sire %s", (counter == 0) ? "D" : "d", name).c_str());
+		SetName(StringFormat("%sire_%s", (counter == 0) ? "D" : "d", name).c_str());
 		npc_spells_id = 1402;
 	}
 	if (prefix == LoC::PrefixBlack) {
-		SetName(StringFormat("%slack %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%slack_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1403;
 	}
 	if (prefix == LoC::PrefixShadow) {
-		SetName(StringFormat("%shadow %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%shadow_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1404;
 	}
 	if (prefix == LoC::PrefixHaze) {
-		SetName(StringFormat("%saze %s", (counter == 0) ? "H" : "h", name).c_str());
+		SetName(StringFormat("%saze_%s", (counter == 0) ? "H" : "h", name).c_str());
 		npc_spells_id = 1405;
 	}
 	if (prefix == LoC::PrefixWind) {
-		SetName(StringFormat("%sind %s", (counter == 0) ? "W" : "w", name).c_str());
+		SetName(StringFormat("%sind_%s", (counter == 0) ? "W" : "w", name).c_str());
 		npc_spells_id = 1406;
 	}
 	if (prefix == LoC::PrefixStorm) {
-		SetName(StringFormat("%storm %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%storm_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1407;
 	}
 	if (prefix == LoC::PrefixWarp) {
-		SetName(StringFormat("%sarp %s", (counter == 0) ? "W" : "w", name).c_str());
+		SetName(StringFormat("%sarp_%s", (counter == 0) ? "W" : "w", name).c_str());
 		npc_spells_id = 1408;
 	}
 	if (prefix == LoC::PrefixNight) {
-		SetName(StringFormat("%sight %s", (counter == 0) ? "N" : "n", name).c_str());
+		SetName(StringFormat("%sight_%s", (counter == 0) ? "N" : "n", name).c_str());
 		npc_spells_id = 1409;
 	}
 	if (prefix == LoC::PrefixMoon) {
-		SetName(StringFormat("%soon %s", (counter == 0) ? "M" : "m", name).c_str());
+		SetName(StringFormat("%soon_%s", (counter == 0) ? "M" : "m", name).c_str());
 		npc_spells_id = 1410;
 	}
 	if (prefix == LoC::PrefixStar) {
-		SetName(StringFormat("%star %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%star_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1411;
 	}
 	if (prefix == LoC::PrefixPit) {
-		SetName(StringFormat("%sit %s", (counter == 0) ? "P" : "p", name).c_str());
+		SetName(StringFormat("%sit_%s", (counter == 0) ? "P" : "p", name).c_str());
 		npc_spells_id = 1412;
 	}
 	if (prefix == LoC::PrefixFire) {
-		SetName(StringFormat("%sire %s", (counter == 0) ? "F" : "f", name).c_str());
+		SetName(StringFormat("%sire_%s", (counter == 0) ? "F" : "f", name).c_str());
 		npc_spells_id = 1413;
 	}
 	if (prefix == LoC::PrefixCold) {
-		SetName(StringFormat("%sold %s", (counter == 0) ? "C" : "c", name).c_str());
+		SetName(StringFormat("%sold_%s", (counter == 0) ? "C" : "c", name).c_str());
 		npc_spells_id = 1414;
 	}
 	if (prefix == LoC::PrefixSeethe) {
-		SetName(StringFormat("%seethe %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%seethe_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1415;
 	}
 	if (prefix == LoC::PrefixSharp) {
-		SetName(StringFormat("%sharp %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%sharp_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1416;
 	}
 	if (prefix == LoC::PrefixAsh) {
-		SetName(StringFormat("%ssh %s", (counter == 0) ? "A" : "a", name).c_str());
+		SetName(StringFormat("%ssh_%s", (counter == 0) ? "A" : "a", name).c_str());
 		npc_spells_id = 1417;
 	}
 	if (prefix == LoC::PrefixBlade) {
-		SetName(StringFormat("%slade %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%slade_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1418;
 	}
 	if (prefix == LoC::PrefixSteel) {
-		SetName(StringFormat("%steel %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%steel_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1419;
 	}
 	if (prefix == LoC::PrefixStone) {
-		SetName(StringFormat("%stone %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%stone_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1420;
 	}
 	if (prefix == LoC::PrefixRust) {
-		SetName(StringFormat("%sust %s", (counter == 0) ? "R" : "r", name).c_str());
+		SetName(StringFormat("%sust_%s", (counter == 0) ? "R" : "r", name).c_str());
 		npc_spells_id = 1421;
 	}
 	if (prefix == LoC::PrefixMold) {
-		SetName(StringFormat("%sold %s", (counter == 0) ? "M" : "m", name).c_str());
+		SetName(StringFormat("%sold_%s", (counter == 0) ? "M" : "m", name).c_str());
 		npc_spells_id = 1422;
 	}
 	if (prefix == LoC::PrefixBlight) {
-		SetName(StringFormat("%slight %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%slight_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1423;
 	}
 	if (prefix == LoC::PrefixPlague) {
-		SetName(StringFormat("%slague %s", (counter == 0) ? "P" : "p", name).c_str());
+		SetName(StringFormat("%slague_%s", (counter == 0) ? "P" : "p", name).c_str());
 		npc_spells_id = 1424;
 	}
 	if (prefix == LoC::PrefixRot) {
-		SetName(StringFormat("%sot %s", (counter == 0) ? "R" : "r", name).c_str());
+		SetName(StringFormat("%sot_%s", (counter == 0) ? "R" : "r", name).c_str());
 		npc_spells_id = 1425;
 	}
 	if (prefix == LoC::PrefixOoze) {
-		SetName(StringFormat("%soze %s", (counter == 0) ? "O" : "o", name).c_str());
+		SetName(StringFormat("%soze_%s", (counter == 0) ? "O" : "o", name).c_str());
 		npc_spells_id = 1426;
 	}
 	if (prefix == LoC::PrefixPuke) {
-		SetName(StringFormat("%suke %s", (counter == 0) ? "P" : "p", name).c_str());
+		SetName(StringFormat("%suke_%s", (counter == 0) ? "P" : "p", name).c_str());
 		npc_spells_id = 1427;
 	}
 	if (prefix == LoC::PrefixSnot) {
-		SetName(StringFormat("%snot %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%snot_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1428;
 	}
 	if (prefix == LoC::PrefixBile) {
-		SetName(StringFormat("%sile %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%sile_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1429;
 	}
 	if (prefix == LoC::PrefixBlood) {
-		SetName(StringFormat("%slood %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%slood_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1430;
 	}
 	if (prefix == LoC::PrefixPulse) {
-		SetName(StringFormat("%sulse %s", (counter == 0) ? "P" : "p", name).c_str());
+		SetName(StringFormat("%sulse_%s", (counter == 0) ? "P" : "p", name).c_str());
 		npc_spells_id = 1431;
 	}
 	if (prefix == LoC::PrefixGut) {
-		SetName(StringFormat("%sut %s", (counter == 0) ? "G" : "g", name).c_str());
+		SetName(StringFormat("%sut_%s", (counter == 0) ? "G" : "g", name).c_str());
 		npc_spells_id = 1432;
 	}
 	if (prefix == LoC::PrefixGore) {
-		SetName(StringFormat("%sore %s", (counter == 0) ? "G" : "g", name).c_str());
+		SetName(StringFormat("%sore_%s", (counter == 0) ? "G" : "g", name).c_str());
 		npc_spells_id = 1433;
 	}
 	if (prefix == LoC::PrefixFlesh) {
-		SetName(StringFormat("%slesh %s", (counter == 0) ? "F" : "f", name).c_str());
+		SetName(StringFormat("%slesh_%s", (counter == 0) ? "F" : "f", name).c_str());
 		npc_spells_id = 1434;
 	}
 	if (prefix == LoC::PrefixBone) {
-		SetName(StringFormat("%sone %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%sone_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1435;
 	}
 	if (prefix == LoC::PrefixSpine) {
-		SetName(StringFormat("%spine %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%spine_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1436;
 	}
 	if (prefix == LoC::PrefixMind) {
-		SetName(StringFormat("%sind %s", (counter == 0) ? "M" : "m", name).c_str());
+		SetName(StringFormat("%sind_%s", (counter == 0) ? "M" : "m", name).c_str());
 		npc_spells_id = 1437;
 	}
 	if (prefix == LoC::PrefixSpirit) {
-		SetName(StringFormat("%spirit %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%spirit_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1438;
 	}
 	if (prefix == LoC::PrefixSoul) {
-		SetName(StringFormat("%soul %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%soul_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1439;
 	}
 	if (prefix == LoC::PrefixWrath) {
-		SetName(StringFormat("%srath %s", (counter == 0) ? "W" : "w", name).c_str());
+		SetName(StringFormat("%srath_%s", (counter == 0) ? "W" : "w", name).c_str());
 		npc_spells_id = 1440;
 	}
 	if (prefix == LoC::PrefixGrief) {
-		SetName(StringFormat("%srief %s", (counter == 0) ? "G" : "g", name).c_str());
+		SetName(StringFormat("%srief_%s", (counter == 0) ? "G" : "g", name).c_str());
 		npc_spells_id = 1441;
 	}
 	if (prefix == LoC::PrefixFoul) {
-		SetName(StringFormat("%soul %s", (counter == 0) ? "F" : "f", name).c_str());
+		SetName(StringFormat("%soul_%s", (counter == 0) ? "F" : "f", name).c_str());
 		npc_spells_id = 1442;
 	}
 	if (prefix == LoC::PrefixVile) {
-		SetName(StringFormat("%sile %s", (counter == 0) ? "V" : "v", name).c_str());
+		SetName(StringFormat("%sile_%s", (counter == 0) ? "V" : "v", name).c_str());
 		npc_spells_id = 1443;
 	}
 	if (prefix == LoC::PrefixSin) {
-		SetName(StringFormat("%sin %s", (counter == 0) ? "S" : "s", name).c_str());
+		SetName(StringFormat("%sin_%s", (counter == 0) ? "S" : "s", name).c_str());
 		npc_spells_id = 1444;
 	}
 	if (prefix == LoC::PrefixChaos) {
-		SetName(StringFormat("%shaos %s", (counter == 0) ? "C" : "c", name).c_str());
+		SetName(StringFormat("%shaos_%s", (counter == 0) ? "C" : "c", name).c_str());
 		npc_spells_id = 1445;
 	}
 	if (prefix == LoC::PrefixDread) {
-		SetName(StringFormat("%sread %s", (counter == 0) ? "D" : "d", name).c_str());
+		SetName(StringFormat("%sread_%s", (counter == 0) ? "D" : "d", name).c_str());
 		npc_spells_id = 1446;
 	}
 	if (prefix == LoC::PrefixDoom) {
-		SetName(StringFormat("%soom %s", (counter == 0) ? "D" : "d", name).c_str());
+		SetName(StringFormat("%soom_%s", (counter == 0) ? "D" : "d", name).c_str());
 		npc_spells_id = 1447;
 	}
 	if (prefix == LoC::PrefixBane) {
-		SetName(StringFormat("%sane %s", (counter == 0) ? "B" : "b", name).c_str());
+		SetName(StringFormat("%sane_%s", (counter == 0) ? "B" : "b", name).c_str());
 		npc_spells_id = 1448;
 	}
 	if (prefix == LoC::PrefixDeath) {
-		SetName(StringFormat("%seath %s", (counter == 0) ? "D" : "d", name).c_str());
+		SetName(StringFormat("%seath_%s", (counter == 0) ? "D" : "d", name).c_str());
 		npc_spells_id = 1449;
 	}
 	if (prefix == LoC::PrefixViper) {
-		SetName(StringFormat("%siper %s", (counter == 0) ? "V" : "v", name).c_str());
+		SetName(StringFormat("%siper_%s", (counter == 0) ? "V" : "v", name).c_str());
 		npc_spells_id = 1450;
 	}
 	if (prefix == LoC::PrefixDragon) {
-		SetName(StringFormat("%sragon %s", (counter == 0) ? "D" : "d", name).c_str());
+		SetName(StringFormat("%sragon_%s", (counter == 0) ? "D" : "d", name).c_str());
 		npc_spells_id = 1451;
 	}
 	if (prefix == LoC::PrefixDevil) {
-		SetName(StringFormat("%sevil %s", (counter == 0) ? "D" : "d", name).c_str());
+		SetName(StringFormat("%sevil_%s", (counter == 0) ? "D" : "d", name).c_str());
 		npc_spells_id = 1452;
 	}
 	return true;
@@ -3315,433 +3321,431 @@ bool NPC::AddPrefix(int counter, int prefix) {
 bool NPC::AddSuffix(int suffix) {
 	if (strlen(name) > 20) return false;
 	if (suffix == LoC::SuffixTouch) {
-		SetName(StringFormat("%s Touch", name).c_str());
+		SetName(StringFormat("%s_Touch", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSpell) {
-		SetName(StringFormat("%s Spell", name).c_str());
+		SetName(StringFormat("%s_Spell", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFeast) {
-		SetName(StringFormat("%s Feast", name).c_str());
+		SetName(StringFormat("%s_Feast", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWound) {
-		SetName(StringFormat("%s Wound", name).c_str());
+		SetName(StringFormat("%s_Wound", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixGrin) {
-		SetName(StringFormat("%s Grin", name).c_str());
+		SetName(StringFormat("%s_Grin", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMaim) {
-		SetName(StringFormat("%s Maim", name).c_str());
+		SetName(StringFormat("%s_Maim", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHack) {
-		SetName(StringFormat("%s Hack", name).c_str());
+		SetName(StringFormat("%s_Hack", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBite) {
-		SetName(StringFormat("%s Bite", name).c_str());
+		SetName(StringFormat("%s_Bite", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixRend) {
-		SetName(StringFormat("%s Rend", name).c_str());
+		SetName(StringFormat("%s_Rend", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBurn) {
-		SetName(StringFormat("%s Burn", name).c_str());
+		SetName(StringFormat("%s_Burn", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixRip) {
-		SetName(StringFormat("%s Rip", name).c_str());
+		SetName(StringFormat("%s_Rip", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixKill) {
-		SetName(StringFormat("%s Kill", name).c_str());
+		SetName(StringFormat("%s_Kill", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixCall) {
-		SetName(StringFormat("%s Call", name).c_str());
+		SetName(StringFormat("%s_Call", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixVex) {
-		SetName(StringFormat("%s Vex", name).c_str());
+		SetName(StringFormat("%s_Vex", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixJade) {
-		SetName(StringFormat("%s Jade", name).c_str());
+		SetName(StringFormat("%s_Jade", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWeb) {
-		SetName(StringFormat("%s Web", name).c_str());
+		SetName(StringFormat("%s_Web", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixShield) {
-		SetName(StringFormat("%s Shield", name).c_str());
+		SetName(StringFormat("%s_Shield", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixKiller) {
-		SetName(StringFormat("%s Killer", name).c_str());
+		SetName(StringFormat("%s_Killer", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixRazor) {
-		SetName(StringFormat("%s Razor", name).c_str());
+		SetName(StringFormat("%s_Razor", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixDrinker) {
-		SetName(StringFormat("%s Drinker", name).c_str());
+		SetName(StringFormat("%s_Drinker", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixShifter) {
-		SetName(StringFormat("%s Shifter", name).c_str());
+		SetName(StringFormat("%s_Shifter", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixCrawler) {
-		SetName(StringFormat("%s Crawler", name).c_str());
+		SetName(StringFormat("%s_Crawler", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixDancer) {
-		SetName(StringFormat("%s Dancer", name).c_str());
+		SetName(StringFormat("%s_Dancer", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBender) {
-		SetName(StringFormat("%s Bender", name).c_str());
+		SetName(StringFormat("%s_Bender", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWeaver) {
-		SetName(StringFormat("%s Weaver", name).c_str());
+		SetName(StringFormat("%s_Weaver", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixEater) {
-		SetName(StringFormat("%s Eater", name).c_str());
+		SetName(StringFormat("%s_Eater", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWidow) {
-		SetName(StringFormat("%s Widow", name).c_str());
+		SetName(StringFormat("%s_Widow", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMaggot) {
-		SetName(StringFormat("%s Maggot", name).c_str());
+		SetName(StringFormat("%s_Maggot", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSpawn) {
-		SetName(StringFormat("%s Spawn", name).c_str());
+		SetName(StringFormat("%s_Spawn", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWight) {
-		SetName(StringFormat("%s Wight", name).c_str());
+		SetName(StringFormat("%s_Wight", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixGrumble) {
-		SetName(StringFormat("%s Grumble", name).c_str());
+		SetName(StringFormat("%s_Grumble", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixGrowler) {
-		SetName(StringFormat("%s Growler", name).c_str());
+		SetName(StringFormat("%s_Growler", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSnarl) {
-		SetName(StringFormat("%s Snarl", name).c_str());
+		SetName(StringFormat("%s_Snarl", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWolf) {
-		SetName(StringFormat("%s Wolf", name).c_str());
+		SetName(StringFormat("%s_Wolf", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixCrow) {
-		SetName(StringFormat("%s Crow", name).c_str());
+		SetName(StringFormat("%s_Crow", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHawk) {
-		SetName(StringFormat("%s Hawk", name).c_str());
+		SetName(StringFormat("%s_Hawk", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixCloud) {
-		SetName(StringFormat("%s Cloud", name).c_str());
+		SetName(StringFormat("%s_Cloud", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBang) {
-		SetName(StringFormat("%s Bang", name).c_str());
+		SetName(StringFormat("%s_Bang", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHead) {
-		SetName(StringFormat("%s Head", name).c_str());
+		SetName(StringFormat("%s_Head", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSkull) {
-		SetName(StringFormat("%s Skull", name).c_str());
+		SetName(StringFormat("%s_Skull", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBrow) {
-		SetName(StringFormat("%s Brow", name).c_str());
+		SetName(StringFormat("%s_Brow", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixEye) {
-		SetName(StringFormat("%s Eye", name).c_str());
+		SetName(StringFormat("%s_Eye", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMaw) {
-		SetName(StringFormat("%s Maw", name).c_str());
+		SetName(StringFormat("%s_Maw", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixTongue) {
-		SetName(StringFormat("%s Tongue", name).c_str());
+		SetName(StringFormat("%s_Tongue", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFang) {
-		SetName(StringFormat("%s Fang", name).c_str());
+		SetName(StringFormat("%s_Fang", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHorn) {
-		SetName(StringFormat("%s Horn", name).c_str());
+		SetName(StringFormat("%s_Horn", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixThorn) {
-		SetName(StringFormat("%s Thorn", name).c_str());
+		SetName(StringFormat("%s_Thorn", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixClaw) {
-		SetName(StringFormat("%s Claw", name).c_str());
+		SetName(StringFormat("%s_Claw", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFist) {
-		SetName(StringFormat("%s Fist", name).c_str());
+		SetName(StringFormat("%s_Fist", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHeart) {
-		SetName(StringFormat("%s Heart", name).c_str());
+		SetName(StringFormat("%s_Heart", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixShank) {
-		SetName(StringFormat("%s Shank", name).c_str());
+		SetName(StringFormat("%s_Shank", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSkin) {
-		SetName(StringFormat("%s Skin", name).c_str());
+		SetName(StringFormat("%s_Skin", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWing) {
-		SetName(StringFormat("%s Wing", name).c_str());
+		SetName(StringFormat("%s_Wing", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixPox) {
-		SetName(StringFormat("%s Pox", name).c_str());
+		SetName(StringFormat("%s_Pox", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFester) {
-		SetName(StringFormat("%s Fester", name).c_str());
+		SetName(StringFormat("%s_Fester", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBlister) {
-		SetName(StringFormat("%s Blister", name).c_str());
+		SetName(StringFormat("%s_Blister", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixPus) {
-		SetName(StringFormat("%s Pus", name).c_str());
+		SetName(StringFormat("%s_Pus", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSlime) {
-		SetName(StringFormat("%s Slime", name).c_str());
+		SetName(StringFormat("%s_Slime", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixDrool) {
-		SetName(StringFormat("%s Drool", name).c_str());
+		SetName(StringFormat("%s_Drool", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFroth) {
-		SetName(StringFormat("%s Froth", name).c_str());
+		SetName(StringFormat("%s_Froth", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSludge) {
-		SetName(StringFormat("%s Sludge", name).c_str());
+		SetName(StringFormat("%s_Sludge", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixVenom) {
-		SetName(StringFormat("%s Venom", name).c_str());
+		SetName(StringFormat("%s_Venom", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixPoison) {
-		SetName(StringFormat("%s Poison", name).c_str());
+		SetName(StringFormat("%s_Poison", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixBreak) {
-		SetName(StringFormat("%s Break", name).c_str());
+		SetName(StringFormat("%s_Break", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixShard) {
-		SetName(StringFormat("%s Shard", name).c_str());
+		SetName(StringFormat("%s_Shard", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFlame) {
-		SetName(StringFormat("%s Flame", name).c_str());
+		SetName(StringFormat("%s_Flame", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMaul) {
-		SetName(StringFormat("%s Maul", name).c_str());
+		SetName(StringFormat("%s_Maul", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixThirst) {
-		SetName(StringFormat("%s Thirst", name).c_str());
+		SetName(StringFormat("%s_Thirst", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixLust) {
-		SetName(StringFormat("%s Lust", name).c_str());
+		SetName(StringFormat("%s_Lust", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHammer) {
-		SetName(StringFormat("%s the Hammer", name).c_str());
+		SetName(StringFormat("%s_the Hammer", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixAxe) {
-		SetName(StringFormat("%s the Axe", name).c_str());
+		SetName(StringFormat("%s_the Axe", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSharp) {
-		SetName(StringFormat("%s the Sharp", name).c_str());
+		SetName(StringFormat("%s_the Sharp", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixJagged) {
-		SetName(StringFormat("%s the Jagged", name).c_str());
+		SetName(StringFormat("%s_the Jagged", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFlayer) {
-		SetName(StringFormat("%s the Flayer", name).c_str());
+		SetName(StringFormat("%s_the Flayer", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSlasher) {
-		SetName(StringFormat("%s the Slasher", name).c_str());
+		SetName(StringFormat("%s_the Slasher", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixImpaler) {
-		SetName(StringFormat("%s the Impaler", name).c_str());
+		SetName(StringFormat("%s_the Impaler", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHunter) {
-		SetName(StringFormat("%s the Hunter", name).c_str());
+		SetName(StringFormat("%s_the Hunter", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSlayer) {
-		SetName(StringFormat("%s the Slayer", name).c_str());
+		SetName(StringFormat("%s_the Slayer", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMauler) {
-		SetName(StringFormat("%s the Mauler", name).c_str());
+		SetName(StringFormat("%s_the Mauler", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixDestroyer) {
-		SetName(StringFormat("%s the Destroyer", name).c_str());
+		SetName(StringFormat("%s_the Destroyer", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixQuick) {
-		SetName(StringFormat("%s the Quick", name).c_str());
+		SetName(StringFormat("%s_the Quick", name).c_str());
 		npc_spells_id = 1;
-		
-
 	}
 	if (suffix == LoC::SuffixWitch) {
-		SetName(StringFormat("%s the Witch", name).c_str());
+		SetName(StringFormat("%s_the Witch", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMad) {
-		SetName(StringFormat("%s the Mad", name).c_str());
+		SetName(StringFormat("%s_the Mad", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixWraith) {
-		SetName(StringFormat("%s the Wraith", name).c_str());
+		SetName(StringFormat("%s_the Wraith", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixShade) {
-		SetName(StringFormat("%s the Shade", name).c_str());
+		SetName(StringFormat("%s_the Shade", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixDead) {
-		SetName(StringFormat("%s the Dead", name).c_str());
+		SetName(StringFormat("%s_the Dead", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixUnholy) {
-		SetName(StringFormat("%s the Unholy", name).c_str());
+		SetName(StringFormat("%s_the Unholy", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHowler) {
-		SetName(StringFormat("%s the Howler", name).c_str());
+		SetName(StringFormat("%s_the Howler", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixGrim) {
-		SetName(StringFormat("%s the Grim", name).c_str());
+		SetName(StringFormat("%s_the Grim", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixDark) {
-		SetName(StringFormat("%s the Dark", name).c_str());
+		SetName(StringFormat("%s_the Dark", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixTainted) {
-		SetName(StringFormat("%s the Tainted", name).c_str());
+		SetName(StringFormat("%s_the Tainted", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixUnclean) {
-		SetName(StringFormat("%s the Unclean", name).c_str());
+		SetName(StringFormat("%s_the Unclean", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixHungry) {
-		SetName(StringFormat("%s the Hungry", name).c_str());
+		SetName(StringFormat("%s_the Hungry", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixCold) {
-		SetName(StringFormat("%s the Cold", name).c_str());
+		SetName(StringFormat("%s_the Cold", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixAuraEnchanted) {
-		SetName(StringFormat("%s Aura Enchanted", name).c_str());
+		SetName(StringFormat("%s_Aura Enchanted", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixColdEnchanted) {
-		SetName(StringFormat("%s Cold Enchanted", name).c_str());
+		SetName(StringFormat("%s_Cold Enchanted", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixCursed) {
-		SetName(StringFormat("%s Cursed", name).c_str());
+		SetName(StringFormat("%s_Cursed", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixExtraFast) {
-		SetName(StringFormat("%s Extra Fast", name).c_str());
+		SetName(StringFormat("%s_Extra Fast", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixExtraStrong) {
-		SetName(StringFormat("%s Extra Strong", name).c_str());
+		SetName(StringFormat("%s_Extra Strong", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixFireEnchanted) {
-		SetName(StringFormat("%s Fire Enchanted", name).c_str());
+		SetName(StringFormat("%s_Fire Enchanted", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixLightningEnchanted) {
-		SetName(StringFormat("%s Lightning Enchanted", name).c_str());
+		SetName(StringFormat("%s_Lightning Enchanted", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMagicResistant) {
-		SetName(StringFormat("%s Magic Resistant", name).c_str());
+		SetName(StringFormat("%s_Magic Resistant", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixManaBurn) {
-		SetName(StringFormat("%s Mana Burn", name).c_str());
+		SetName(StringFormat("%s_Mana Burn", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixMultiShot) {
-		SetName(StringFormat("%s Multi-Shot", name).c_str());
+		SetName(StringFormat("%s_Multi-Shot", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixSpectralHit) {
-		SetName(StringFormat("%s Spectral Hit", name).c_str());
+		SetName(StringFormat("%s_Spectral Hit", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixStoneSkin) {
-		SetName(StringFormat("%s Stone Skin", name).c_str());
+		SetName(StringFormat("%s_Stone Skin", name).c_str());
 		npc_spells_id = 1;
 	}
 	if (suffix == LoC::SuffixTeleporting) {
-		SetName(StringFormat("%s Teleporting", name).c_str());
+		SetName(StringFormat("%s_Teleporting", name).c_str());
 		npc_spells_id = 1;
 	}
 	return true;
