@@ -3099,7 +3099,7 @@ bool NPC::AddPrefix(int counter, int prefix) {
 	if (strlen(name) > 20) return false;
 	if (prefix == LoC::PrefixGloom) {
 		SetName(StringFormat("%sloom %s", (counter == 0) ? "G" : "g", name).c_str());
-		npc_spells_id = 1400;
+		npc_spells_id = 167; //black reaver
 	}
 	if (prefix == LoC::PrefixGray) {
 		SetName(StringFormat("%sray %s", (counter == 0) ? "G" : "g", name).c_str());
