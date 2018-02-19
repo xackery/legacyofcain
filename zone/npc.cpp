@@ -2980,23 +2980,28 @@ int NPC::GetItemLevel(Mob *killer) {
 //GetDropCount determines how many drops a mob dropped, and is called by DoItemization
 int NPC::GetDropCount(Mob *killer) {
 	int difficulty = zone->GetInstanceID();
+	int cat = GetCategory();
 	//Drop count is weighted to lean towards less more than more.
 	int drop_0_chance = 0;
 	if (difficulty == LoC::Normal) drop_0_chance = RuleI(NPC, ItemDrop0ChanceNormal);
 	if (difficulty == LoC::Nightmare) drop_0_chance = RuleI(NPC, ItemDrop0ChanceNightmare);
 	if (difficulty == LoC::Hell) drop_0_chance = RuleI(NPC, ItemDrop0ChanceHell);
+	if (cat >= LoC::MobChampion) drop_0_chance = 0;
 	int drop_1_chance = 0;
 	if (difficulty == LoC::Normal) drop_1_chance = RuleI(NPC, ItemDrop1ChanceNormal);
 	if (difficulty == LoC::Nightmare) drop_1_chance = RuleI(NPC, ItemDrop1ChanceNightmare);
 	if (difficulty == LoC::Hell) drop_1_chance = RuleI(NPC, ItemDrop1ChanceHell);
 	int drop_2_chance = 0;
+	if (cat >= LoC::MobRare) drop_0_chance = 0;
 	if (difficulty == LoC::Normal) drop_2_chance = RuleI(NPC, ItemDrop2ChanceNormal);
 	if (difficulty == LoC::Nightmare) drop_2_chance = RuleI(NPC, ItemDrop2ChanceNightmare);
 	if (difficulty == LoC::Hell) drop_2_chance = RuleI(NPC, ItemDrop2ChanceHell);
 	int drop_3_chance = 0;
+	if (cat >= LoC::MobUnique) drop_0_chance = 0;
 	if (difficulty == LoC::Normal) drop_3_chance = RuleI(NPC, ItemDrop3ChanceNormal);
 	if (difficulty == LoC::Nightmare) drop_3_chance = RuleI(NPC, ItemDrop3ChanceNightmare);
 	if (difficulty == LoC::Hell) drop_3_chance = RuleI(NPC, ItemDrop3ChanceHell);
+	if (cat >= LoC::MobSuperUnique) drop_0_chance = 0;
 	int drop_4_chance = 0;
 	if (difficulty == LoC::Normal) drop_4_chance = RuleI(NPC, ItemDrop4ChanceNormal);
 	if (difficulty == LoC::Nightmare) drop_4_chance = RuleI(NPC, ItemDrop4ChanceNightmare);
@@ -3058,11 +3063,13 @@ int NPC::GetDropCount(Mob *killer) {
 //GetItemRarity is called by DoItemization, and is determined during a mob's death for magic calculations
 int NPC::GetItemRarity(Mob *killer) {
 	int difficulty = zone->GetInstanceID();
+	int cat = GetCategory();
 
 	int common_chance = 0;
 	if (difficulty == LoC::Normal) common_chance = RuleI(NPC, ItemCommonChanceNormal);
 	if (difficulty == LoC::Nightmare) common_chance = RuleI(NPC, ItemCommonChanceNightmare);
 	if (difficulty == LoC::Hell) common_chance = RuleI(NPC, ItemCommonChanceHell);
+	if (cat >= LoC::MobChampion) common_chance = 0;
 	int uncommon_chance = 0;
 	if (difficulty == LoC::Normal) uncommon_chance = RuleI(NPC, ItemUncommonChanceNormal);
 	if (difficulty == LoC::Nightmare) uncommon_chance = RuleI(NPC, ItemUncommonChanceNightmare);
@@ -3082,7 +3089,17 @@ int NPC::GetItemRarity(Mob *killer) {
 
 	//Add Magic Find modifiers here. Killer is referenced as an argument, 
 	//so we can iterate group to calculate magic find bonuses, boosting non-common items.
-
+	int cha = killer->GetCHA();
+	if (cha > 0) {
+		int mfMod = 3;
+		if (difficulty == LoC::Normal) mfMod = 3;
+		if (difficulty == LoC::Nightmare) mfMod = 2;			
+		if (difficulty == LoC::Hell) mfMod = 1;
+		uncommon_chance += cha / mfMod;
+		rare_chance += cha / mfMod;
+		legendary_chance += cha / mfMod;
+		unique_chance += cha / mfMod;
+	}
 
 	//Tally up chances
 	std::map <int, uint8> pool;
