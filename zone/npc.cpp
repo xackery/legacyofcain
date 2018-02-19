@@ -2889,7 +2889,7 @@ void NPC::DoItemization(Mob *killer) {
 		if (killer->GetClass() == CLERIC || killer->GetClass() == DRUID || killer->GetClass() == SHAMAN) class_type = LoC::Support;
 		if (killer->GetClass() == WIZARD || killer->GetClass() == NECROMANCER|| killer->GetClass() == MAGICIAN || killer->GetClass() == ENCHANTER) class_type = LoC::Caster;
 
-		if (zone->random.Roll(100) <= 40) {
+		if (zone->random.Roll(RuleI(LoC, ItemizationOtherClassTypeChance))) {
 			class_type = zone->random.Int(0, LoC::ClassMax);
 		} 
 		
