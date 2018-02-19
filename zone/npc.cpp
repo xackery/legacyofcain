@@ -2887,7 +2887,7 @@ void NPC::DoItemization(Mob *killer) {
 		if (killer->GetClass() == SHADOWKNIGHT || killer->GetClass() == WARRIOR || killer->GetClass() == PALADIN) class_type = LoC::Tank;
 		if (killer->GetClass() == BEASTLORD || killer->GetClass() == MONK || killer->GetClass() == BERSERKER||  killer->GetClass() == RANGER || killer->GetClass() == ROGUE || killer->GetClass() == BARD) class_type = LoC::Damage;
 		if (killer->GetClass() == CLERIC || killer->GetClass() == DRUID || killer->GetClass() == SHAMAN) class_type = LoC::Support;
-		if (killer->GetClass() == MAGICIAN|| killer->GetClass() == NECROMANCER|| killer->GetClass() ==MAGICIAN || killer->GetClass() == ENCHANTER) class_type = LoC::Caster;
+		if (killer->GetClass() == WIZARD || killer->GetClass() == NECROMANCER|| killer->GetClass() == MAGICIAN || killer->GetClass() == ENCHANTER) class_type = LoC::Caster;
 
 		if (zone->random.Roll(100) <= 40) {
 			class_type = zone->random.Int(0, LoC::ClassMax);
