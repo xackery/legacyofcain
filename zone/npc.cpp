@@ -2867,9 +2867,12 @@ void NPC::DoItemization(Mob *killer) {
 	if (killer == NULL) return; //don't bother itemizing if we don't know who killer was
 
 	int difficulty = zone->GetInstanceID();
-
+	
+	
 	int drop_count = GetDropCount(killer);	
 	if (drop_count == 0) return;
+	AddCash(zone->random.Int(0, GetLevel()), zone->random.Int(0, GetLevel() / 2), zone->random.Int(0, GetLevel() / 3), zone->random.Int(0, GetLevel() / 4));
+	if (cat > 0) AddCash(zone->random.Int(0, GetLevel()), zone->random.Int(0, GetLevel()), zone->random.Int(0, GetLevel() / 2), zone->random.Int(0, GetLevel() / 2));
 
 	for (int i = 0; i < drop_count; i++) {
 		uint32 item_id = 0;
