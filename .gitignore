@@ -28,7 +28,6 @@ install_manifest.txt
 [Bb]uild64/
 [Bb]uild_32/
 [Bb]uild_64/
-deploy/server/
 x64/
 x86/
 log/

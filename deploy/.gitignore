@@ -1,0 +1,3 @@
+server/*
+!server/quests
+!server/plugins
