@@ -2814,19 +2814,19 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	CalcNPCResists();
 	CalcNPCRegen();
 	
-	uint8 random_level = (zone->random.Int(level, maxlevel));
+	
 
 	if (zone->GetZoneID() < 200 || level < 48) {
-		max_hp += (random_level - level) * 20;
-		base_hp += (random_level - level) * 20;
+		max_hp += level * 20;
+		base_hp += level * 20;
 	}
 	else {
-		max_hp += (random_level - level) * 100;
-		base_hp += (random_level - level) * 100;
+		max_hp += level * 100;
+		base_hp += level * 100;
 	}
 
 	cur_hp = max_hp;
-	max_dmg += (random_level - level) * 2;
+	max_dmg += level * 2;
 
 	if (cat == LoC::MobChampion) {
 		min_damage *= 2;
