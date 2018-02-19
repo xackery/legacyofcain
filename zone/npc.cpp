@@ -399,6 +399,7 @@ NPC::NPC(const NPCType* d, Spawn2* in_respawn, const glm::vec4& position, int if
 	m_targetable = !d->untargetable;
 
 	Hijack(d, in_respawn);
+	CalcBonuses();
 }
 
 NPC::~NPC()
@@ -2809,11 +2810,37 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	if (cat == LoC::MobBoss) levelMod = zone->random.Int(8, 20);
 	SetLevel(level + levelMod);
 
-	if (cat == LoC::MobChampion) min_damage *= 2;
-	if (cat == LoC::MobRare) min_damage *= 3;
-	if (cat == LoC::MobUnique) min_damage *= 3;
-	if (cat == LoC::MobSuperUnique) min_damage *= 3;
-	if (cat == LoC::MobBoss) min_damage *= 4;
+	if (cat == LoC::MobChampion) {
+		min_damage *= 2;
+		max_hp *= 2;
+		size += 1.0f;
+		SetLastName("Champion");
+	}
+
+	if (cat == LoC::MobRare) {
+		min_damage *= 3;
+		max_hp *= 3;
+		size += 1.2f;
+		SetLastName("Rare");
+	}
+	if (cat == LoC::MobUnique) {
+		min_damage *= 3;
+		max_hp *= 3;
+		size += 1.8f;
+		SetLastName("Unique");
+	}
+	if (cat == LoC::MobSuperUnique) {
+		min_damage *= 3;
+		max_hp *= 3;
+		size += 2.1f;
+		SetLastName("Super Unique");
+	}
+	if (cat == LoC::MobBoss) {
+		min_damage *= 4;
+		max_hp *= 4;
+		size += 3.0f;
+		SetLastName("Boss");
+	}
 
 	roambox_delay = zone->random.Int(1000, 10000);
 	roambox_min_delay = zone->random.Int(500, 1000);
@@ -3059,11 +3086,11 @@ int32 NPC::AdjustExperience(int base_exp, Mob *killer) {
 	int cat = GetCategory();
 	if (cat == 0) return exp;
 
-	if (cat == LoC::MobChampion) exp *= 2;
-	if (cat == LoC::MobRare) exp *= 2;
-	if (cat == LoC::MobUnique) exp *= 3;
-	if (cat == LoC::MobSuperUnique) exp *= 5;
-	if (cat == LoC::MobBoss) exp *= 2;
+	if (cat == LoC::MobChampion) exp *= 4;
+	if (cat == LoC::MobRare) exp *= 4;
+	if (cat == LoC::MobUnique) exp *= 5;
+	if (cat == LoC::MobSuperUnique) exp *= 6;
+	if (cat == LoC::MobBoss) exp *= 5;
 	return exp;
 }
 
@@ -3610,6 +3637,8 @@ bool NPC::AddSuffix(int suffix) {
 	if (suffix == LoC::SuffixQuick) {
 		SetName(StringFormat("%s the Quick", name).c_str());
 		npc_spells_id = 1;
+		
+
 	}
 	if (suffix == LoC::SuffixWitch) {
 		SetName(StringFormat("%s the Witch", name).c_str());
