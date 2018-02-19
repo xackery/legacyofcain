@@ -3327,19 +3327,19 @@ bool NPC::AddSuffix(int suffix) {
 	if (strlen(name) > 20) return false;
 	if (suffix == LoC::SuffixTouch) {
 		SetName(StringFormat("%s_Touch", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 20;
 	}
 	if (suffix == LoC::SuffixSpell) {
 		SetName(StringFormat("%s_Spell", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 7;
 	}
 	if (suffix == LoC::SuffixFeast) {
 		SetName(StringFormat("%s_Feast", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 16;
 	}
 	if (suffix == LoC::SuffixWound) {
 		SetName(StringFormat("%s_Wound", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 4;
 	}
 	if (suffix == LoC::SuffixGrin) {
 		SetName(StringFormat("%s_Grin", name).c_str());
@@ -3347,91 +3347,91 @@ bool NPC::AddSuffix(int suffix) {
 	}
 	if (suffix == LoC::SuffixMaim) {
 		SetName(StringFormat("%s_Maim", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 3;
 	}
 	if (suffix == LoC::SuffixHack) {
 		SetName(StringFormat("%s_Hack", name).c_str());
-		npc_spells_id = 1;
+		SetSpecialAbility(SPECATK_RAMPAGE, 1);
 	}
 	if (suffix == LoC::SuffixBite) {
 		SetName(StringFormat("%s_Bite", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 17;
 	}
 	if (suffix == LoC::SuffixRend) {
 		SetName(StringFormat("%s_Rend", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 17;
 	}
 	if (suffix == LoC::SuffixBurn) {
 		SetName(StringFormat("%s_Burn", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 17;
 	}
 	if (suffix == LoC::SuffixRip) {
 		SetName(StringFormat("%s_Rip", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 36;
 	}
 	if (suffix == LoC::SuffixKill) {
 		SetName(StringFormat("%s_Kill", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 76;
 	}
 	if (suffix == LoC::SuffixCall) {
 		SetName(StringFormat("%s_Call", name).c_str());
-		npc_spells_id = 1;
+		SetSpecialAbility(SPECATK_SUMMON, 1);
 	}
 	if (suffix == LoC::SuffixVex) {
 		SetName(StringFormat("%s_Vex", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 134;
 	}
 	if (suffix == LoC::SuffixJade) {
 		SetName(StringFormat("%s_Jade", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 154;
 	}
 	if (suffix == LoC::SuffixWeb) {
 		SetName(StringFormat("%s_Web", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 158;
 	}
 	if (suffix == LoC::SuffixShield) {
 		SetName(StringFormat("%s_Shield", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 11;
 	}
 	if (suffix == LoC::SuffixKiller) {
 		SetName(StringFormat("%s_Killer", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 388;
 	}
 	if (suffix == LoC::SuffixRazor) {
 		SetName(StringFormat("%s_Razor", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 404;
 	}
 	if (suffix == LoC::SuffixDrinker) {
 		SetName(StringFormat("%s_Drinker", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 442;
 	}
 	if (suffix == LoC::SuffixShifter) {
 		SetName(StringFormat("%s_Shifter", name).c_str());
-		npc_spells_id = 1;
+		SetSpecialAbility(SPECATK_SUMMON, 1);
 	}
 	if (suffix == LoC::SuffixCrawler) {
 		SetName(StringFormat("%s_Crawler", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 16;		
 	}
 	if (suffix == LoC::SuffixDancer) {
 		SetName(StringFormat("%s_Dancer", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 11;
 	}
 	if (suffix == LoC::SuffixBender) {
 		SetName(StringFormat("%s_Bender", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 29;
 	}
 	if (suffix == LoC::SuffixWeaver) {
 		SetName(StringFormat("%s_Weaver", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 35;
 	}
 	if (suffix == LoC::SuffixEater) {
 		SetName(StringFormat("%s_Eater", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 59;
 	}
 	if (suffix == LoC::SuffixWidow) {
 		SetName(StringFormat("%s_Widow", name).c_str());
-		npc_spells_id = 1;
+		
 	}
 	if (suffix == LoC::SuffixMaggot) {
 		SetName(StringFormat("%s_Maggot", name).c_str());
@@ -3715,43 +3715,44 @@ bool NPC::AddSuffix(int suffix) {
 	}
 	if (suffix == LoC::SuffixExtraFast) {
 		SetName(StringFormat("%s_Extra Fast", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_effects_id = 30;
 	}
 	if (suffix == LoC::SuffixExtraStrong) {
-		SetName(StringFormat("%s_Extra Strong", name).c_str());
-		npc_spells_id = 1;
+		SetName(StringFormat("%s_Extra Strong", name).c_str());				
+		min_damage *= 3;
 	}
 	if (suffix == LoC::SuffixFireEnchanted) {
 		SetName(StringFormat("%s_Fire Enchanted", name).c_str());
-		npc_spells_id = 1;
+		FR *= 10;
+		npc_spells_id = 18;
 	}
 	if (suffix == LoC::SuffixLightningEnchanted) {
-		SetName(StringFormat("%s_Lightning Enchanted", name).c_str());
-		npc_spells_id = 1;
+		SetName(StringFormat("%s_Disease Enchanted", name).c_str());
+		DR *= 10;
 	}
 	if (suffix == LoC::SuffixMagicResistant) {
 		SetName(StringFormat("%s_Magic Resistant", name).c_str());
-		npc_spells_id = 1;
+		MR *= 10;
 	}
 	if (suffix == LoC::SuffixManaBurn) {
 		SetName(StringFormat("%s_Mana Burn", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 159;
 	}
 	if (suffix == LoC::SuffixMultiShot) {
 		SetName(StringFormat("%s_Multi-Shot", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 134;
 	}
 	if (suffix == LoC::SuffixSpectralHit) {
 		SetName(StringFormat("%s_Spectral Hit", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 114;
 	}
 	if (suffix == LoC::SuffixStoneSkin) {
 		SetName(StringFormat("%s_Stone Skin", name).c_str());
-		npc_spells_id = 1;
+		AC *= 4;
 	}
 	if (suffix == LoC::SuffixTeleporting) {
 		SetName(StringFormat("%s_Teleporting", name).c_str());
-		npc_spells_id = 1;
+		npc_spells_id = 106;
 	}
 	return true;
 }
