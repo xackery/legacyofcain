@@ -14,6 +14,8 @@
 #include "../common/servertalk.h"
 #include "../common/string_util.h"
 
+#include <thread>
+
 extern ZSList zoneserver_list;
 extern LoginServerList loginserverlist;
 extern ClientList client_list;
@@ -217,6 +219,55 @@ void NatsManager::CommandMessageEvent(eqproto::CommandMessage* message, const ch
 		}
 	}
 
+	if (message->command().compare("reloadrules") == 0) {
+		RuleManager::Instance()->LoadRules(&database, "default");		
+		auto pack = new ServerPacket(ServerOP_ReloadRules, 0);
+		zoneserver_list.SendPacket(pack);
+		safe_delete(pack);
+		message->set_result("Reloading Server Rules");
+	}
+
+	if (message->command().compare("hotfix") == 0) {
+		std::string hotfix;
+		database.GetVariable("hotfix_name", hotfix);
+
+		std::string hotfix_name;
+		if (!strcasecmp(hotfix.c_str(), "hotfix_")) {
+			hotfix_name = "";
+		}
+		else {
+			hotfix_name = "hotfix_";
+		}
+
+		message->set_result("Creating and applying hotfix");
+		std::thread t1([hotfix_name]() {
+#ifdef WIN32
+			if (hotfix_name.length() > 0) {
+				system(StringFormat("shared_memory -hotfix=%s", hotfix_name.c_str()).c_str());
+			}
+			else {
+				system(StringFormat("shared_memory").c_str());
+			}
+#else
+			if (hotfix_name.length() > 0) {
+				system(StringFormat("./shared_memory -hotfix=%s", hotfix_name.c_str()).c_str());
+			}
+			else {
+				system(StringFormat("./shared_memory").c_str());
+			}
+#endif
+			database.SetVariable("hotfix_name", hotfix_name);
+
+			ServerPacket pack(ServerOP_ChangeSharedMem, hotfix_name.length() + 1);
+			if (hotfix_name.length() > 0) {
+				strcpy((char*)pack.pBuffer, hotfix_name.c_str());
+			}
+			zoneserver_list.SendPacket(&pack);
+		});
+
+		t1.detach();
+	}
+
 	if (message->result().length() <= 1) {
 		message->set_result("Failed to parse command.");		
 	}
@@ -236,7 +287,7 @@ void NatsManager::CommandMessageEvent(eqproto::CommandMessage* message, const ch
 //Send a message to all zone servers.
 void NatsManager::ChannelMessageEvent(eqproto::ChannelMessage* message) {
 	if (!connect()) return;
-	if (message->zone_id() > 0) return; //do'nt process non-zero messages
+	if (message->zone_id() > 0) return; //don't process non-zero messages
 	Log(Logs::General, Logs::NATS, "Broadcasting Message");
 	if (message->is_emote()) { //emote message
 		zoneserver_list.SendEmoteMessage(message->to().c_str(), message->guilddbid(), message->minstatus(), message->type(), message->message().c_str());
