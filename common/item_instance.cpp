@@ -1693,6 +1693,28 @@ int EQEmu::ItemInstance::GetItemHaste(bool augments) const
 	return total;
 }
 
+int EQEmu::ItemInstance::GetWornValue(const char *key)
+{
+	int finalValue = 0;
+	const auto item = GetItem();
+	if (!item) return finalValue;
+	
+	for (int i = inventory::socketBegin; i < inventory::SocketCount; ++i) {
+		const auto aug_instance= GetAugment(i);
+		if (!aug_instance) continue;
+		const auto aug = aug_instance->GetItem();
+		if (!aug) continue;
+		if (strncmp(aug->WornName, key, strlen(key)) != 0) continue; //it has key in it
+		char val[4];
+		
+		memcpy(val, &aug->WornName[strlen(key)], 4);
+		auto percent = strchr(val, '%');
+		if (percent != nullptr) *percent = ' ';
+		finalValue += atoi(val);
+	}
+	return finalValue;
+}
+
 //
 // class EvolveInfo
 //
