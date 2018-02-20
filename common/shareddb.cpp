@@ -405,6 +405,32 @@ bool SharedDatabase::SetStartingItems(PlayerProfile_Struct* pp, EQEmu::Inventory
 		safe_delete(myinst);
 	}
 
+	// Legacy of Cain Starting Weapon
+	uint64 myitemid;
+	uint64 myitemaug;
+	if (si_class == SHADOWKNIGHT || si_class == WARRIOR || si_class == PALADIN) {
+		myitemid = 1018;
+		myitemaug = 7324;
+	} else if (si_class == BERSERKER) {
+		myitemid = 3819;
+		myitemaug = 7324;
+	} else if (si_class == BEASTLORD || si_class == MONK || si_class == RANGER || si_class == ROGUE || si_class == BARD) {
+		myitemid = 3766;
+		myitemaug = 7324;
+	} else if (si_class == CLERIC || si_class == DRUID || si_class == SHAMAN) {
+		myitemid = 2391;
+		myitemaug = 7324;
+	} else if (si_class == WIZARD || si_class == NECROMANCER || si_class == MAGICIAN || si_class == ENCHANTER) {
+		myitemid = 5147;
+		myitemaug = 7324;
+	}
+
+	if (myitemid > 0) {
+		EQEmu::ItemInstance* myiteminst = CreateItem(myitemid, 1, 0, 0, 0, myitemaug, 0, 0, false);
+		inv->PutItem(13, *myiteminst);
+		safe_delete(myiteminst);
+	}
+
 	return true;
 }
 

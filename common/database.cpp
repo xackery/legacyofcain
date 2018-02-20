@@ -711,8 +711,19 @@ bool Database::StoreCharacter(uint32 account_id, PlayerProfile_Struct* pp, EQEmu
 	for (int16 i = EQEmu::legacy::EQUIPMENT_BEGIN; i <= EQEmu::legacy::BANK_BAGS_END;) {
 		const EQEmu::ItemInstance* newinv = inv->GetItem(i);
 		if (newinv) {
-			invquery = StringFormat("INSERT INTO `inventory` (charid, slotid, itemid, charges, color) VALUES (%u, %i, %u, %i, %u)",
-				charid, i, newinv->GetItem()->ID, newinv->GetCharges(), newinv->GetColor()); 
+			invquery = StringFormat("INSERT INTO `inventory` (charid, slotid, itemid, charges, color, augslot1, augslot2, augslot3, augslot4, augslot5, augslot6) "
+				"VALUES (%u, %i, %u, %i, %u, %u, %u, %u, %u, %u, %u)",
+				charid, 
+				i, 
+				newinv->GetItem()->ID, 
+				newinv->GetCharges(), 
+				newinv->GetColor(),
+				newinv->GetAugmentItemID(0),
+				newinv->GetAugmentItemID(1),
+				newinv->GetAugmentItemID(2),
+				newinv->GetAugmentItemID(3),
+				newinv->GetAugmentItemID(4),
+				newinv->GetAugmentItemID(5));
 			
 			auto results = QueryDatabase(invquery); 
 		}
