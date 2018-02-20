@@ -276,7 +276,7 @@ namespace EQEmu
 		int GetItemHeroicDR(bool augments = false) const;
 		int GetItemHeroicCorrup(bool augments = false) const;
 		int GetItemHaste(bool augments = false) const;
-		int EQEmu::ItemInstance::GetWornValue(const char *key);
+		int GetWornValue(const char *key);
 
 	protected:
 		//////////////////////////
