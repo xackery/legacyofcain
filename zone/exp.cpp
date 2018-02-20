@@ -846,44 +846,45 @@ void Client::SetLevel(uint8 set_level, bool command)
 //Called on level up, this auto grants skills and spells
 void Client::UpdateSkillsAndSpells() {
 
-	uint16 book_slot, curspell;
-	uint16 abilityCount = 0;
-	uint16 spellCount = 0;
-	//Scribe New Spells and Disciplines
-	for (curspell = 0, book_slot = this->GetNextAvailableSpellBookSlot(), spellCount = 0; curspell < SPDAT_RECORDS && book_slot < MAX_PP_SPELLBOOK; curspell++, book_slot = this->GetNextAvailableSpellBookSlot(book_slot))
+	uint16 book_slot, curspell, spellCount, disciplineCount;
+
+	for (curspell = 0, book_slot = GetNextAvailableSpellBookSlot(), spellCount = 0, disciplineCount = 0; curspell < SPDAT_RECORDS && book_slot < MAX_PP_SPELLBOOK; curspell++, book_slot = GetNextAvailableSpellBookSlot(book_slot))
 	{
-		if (
-			spells[curspell].classes[WARRIOR] != 0 && // check if spell exists
-			spells[curspell].classes[this->GetPP().class_ - 1] <= GetLevel() &&	//maximum level
-			spells[curspell].classes[this->GetPP().class_ - 1] >= 1 &&	//minimum level
-			spells[curspell].skill != 52
-			) {
-			if (spells[curspell].classes[GetClass()] > GetLevel()) continue; //don't scribe higher than our level
-			
-			if (book_slot == -1) {	//no more book slots
-				this->Message(13, "Unable to scribe spell %s (%u) to spellbook: no more spell book slots available.", spells[curspell].name, curspell);
-				break;
-			}
-			if (!IsDiscipline(curspell) && !this->HasSpellScribed(curspell)) {	//isn't a discipline & we don't already have it scribed
-				this->ScribeSpell(curspell, book_slot);
+		if (spells[curspell].classes[WARRIOR] != 0 && // check if spell exists
+			spells[curspell].classes[GetPP().class_ - 1] <= GetLevel() &&	//maximum level
+			spells[curspell].skill != 52) 
+		{			
+			if (!IsDiscipline(curspell) && !HasSpellScribed(curspell)) {	//isn't a discipline & we don't already have it scribed
+				if (book_slot == -1) {	//no more book slots
+					Message(13, "Unable to scribe spell %s (%u) to spellbook: no more spell book slots available.", spells[curspell].name, curspell);
+					break;
+				}
+				ScribeSpell(curspell, book_slot);
 				spellCount++;
 			}
 			if (IsDiscipline(curspell)) {
 				//we may want to come up with a function like Client::GetNextAvailableSpellBookSlot() to help speed this up a little
 				for (int r = 0; r < MAX_PP_DISCIPLINES; r++) {
-					if (this->GetPP().disciplines.values[r] == curspell) { //Already learned
-						break;
+					if (GetPP().disciplines.values[r] == curspell) {
+						break;	//continue the 1st loop
 					}
-					else if (this->GetPP().disciplines.values[r] == 0) {
-						this->GetPP().disciplines.values[r] = curspell;
-						database.SaveCharacterDisc(this->CharacterID(), r, curspell);
-						this->SendDisciplineUpdate();
-						abilityCount++;	//success counter
-						break;
+					else if (GetPP().disciplines.values[r] == 0) {
+						GetPP().disciplines.values[r] = curspell;
+						database.SaveCharacterDisc(CharacterID(), r, curspell);
+						SendDisciplineUpdate();
+						disciplineCount++;	//success counter
+						break;	//continue the 1st loop
 					}	//if we get to this point, there's already a discipline in this slot, so we continue onto the next slot
 				}
 			}
 		}
+	}
+
+	if (spellCount > 0) {
+		Message(0, "You have learned %u new spells!", spellCount);
+	}
+	if (disciplineCount > 0) {
+		Message(0, "You have learned %u new disciplines!", disciplineCount);
 	}
 	
 	//Skill logic
@@ -1191,13 +1192,6 @@ void Client::UpdateSkillsAndSpells() {
 	}
 	if (GetSkill(EQEmu::skills::SkillFlyingKick) == 0 && GetClass() == MONK && GetLevel() >= 30) {
 		SetSkill(EQEmu::skills::SkillFlyingKick, 1);
-	}
-
-	if (spellCount > 0) {
-		Message(0, "You have learned %u new spells!", spellCount);
-	}
-	if (abilityCount > 0) {
-		Message(0, "You have learned %u new disciplines!", abilityCount);
 	}
 }
 
