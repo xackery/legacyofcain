@@ -516,13 +516,16 @@ EQEmu::ItemInstance* EQEmu::ItemInstance::GetAugment(uint8 slot) const
 EQEmu::ItemInstance* EQEmu::ItemInstance::GetOrnamentationAug(int32 ornamentationAugtype) const
 {
 	if (!m_item || !m_item->IsClassCommon()) { return nullptr; }
+	if (!GetAugment(5)) return nullptr;
+	return this->GetAugment(5);
+	/*
 	if (ornamentationAugtype == 0) { return nullptr; }
 
 	for (int i = inventory::socketBegin; i < inventory::SocketCount; i++)
 	{
 		if (GetAugment(i) && m_item->AugSlotType[i] == ornamentationAugtype)
 		{
-			const char *item_IDFile = GetAugment(i)->GetItem()->IDFile;
+			
 			if (
 				(strncmp(item_IDFile, "IT64", strlen(item_IDFile)) == 0
 				|| strncmp(item_IDFile, "IT63", strlen(item_IDFile)) == 0)
@@ -536,6 +539,7 @@ EQEmu::ItemInstance* EQEmu::ItemInstance::GetOrnamentationAug(int32 ornamentatio
 	}
 
 	return nullptr;
+	*/
 }
 
 uint32 EQEmu::ItemInstance::GetOrnamentHeroModel(int32 material_slot) const {

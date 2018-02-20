@@ -72,12 +72,14 @@ namespace LoC {
 		SlotGroupBody,
 		SlotGroupWeapons,
 		SlotGroupBelt,
+		SlotGroupJewelry,
 	};
 	enum ClassType {
 		Tank = 0,
 		Support,
 		Damage,
 		Caster,
+		ClassAll,
 		ClassMax,
 	};
 	enum PrefixType {
