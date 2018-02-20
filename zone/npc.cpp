@@ -10362,7 +10362,7 @@ int NPC::GetItemProperty(int aug_index, int rarity, int slot_type, int class_typ
 	if (rarity == LoC::Unique) { item_min += 9; item_max += 15; }
 
 	//don't add properties to lesser gear on farther aug indexes
-	if (rarity < LoC::Legendary && aug_index == 6) return 0; //no slot 5's on non-legendary
+	if (rarity != LoC::Legendary && aug_index == 6) return 0; //no slot 5's on non-legendary
 	if ((rarity == LoC::Common || rarity == LoC::Uncommon) && aug_index == 5) return 0; //no skillmods on on common/uncommons.
 	if ((rarity == LoC::Common) && aug_index == 4) return 0; //no slot 4 skillmods on common.	
 
