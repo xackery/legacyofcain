@@ -2867,9 +2867,11 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	}
 	SetHP(GetMaxHP());
 
+	/*
 	roambox_delay = zone->random.Int(1000, 10000);
 	roambox_min_delay = zone->random.Int(500, 1000);
 	roambox_distance = zone->random.Int(5, 50);
+	*/
 	
 }
 
