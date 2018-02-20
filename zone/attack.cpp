@@ -1530,7 +1530,8 @@ bool Client::Attack(Mob* other, int Hand, bool bRiposte, bool IsStrikethrough, b
 
 	if (IsDead()) return false;
 
-	MeleeLifeTap(my_hit.damage_done);
+	EQEmu::ItemInstance *glove = GetInv().GetItem(EQEmu::inventory::slotHands);		
+	MeleeLifeTap(my_hit.damage_done, Hand, glove);
 
 	if (my_hit.damage_done > 0 && HasSkillProcSuccess() && other && other->GetHP() > 0)
 		TrySkillProc(other, my_hit.skill, 0, true, Hand);
@@ -2070,7 +2071,7 @@ bool NPC::Attack(Mob* other, int Hand, bool bRiposte, bool IsStrikethrough, bool
 	if (HasDied()) //killed by damage shield ect
 		return false;
 
-	MeleeLifeTap(my_hit.damage_done);
+	MeleeLifeTap(my_hit.damage_done, Hand, nullptr);
 
 	CommonBreakInvisibleFromCombat();
 

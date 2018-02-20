@@ -4897,11 +4897,15 @@ int16 Mob::GetSkillDmgAmt(uint16 skill)
 	return skill_dmg;
 }
 
-void Mob::MeleeLifeTap(int32 damage) {
+void Mob::MeleeLifeTap(int32 damage, int Hand, EQEmu::ItemInstance* glove) {
 
 	int32 lifetap_amt = 0;
 	lifetap_amt = spellbonuses.MeleeLifetap + itembonuses.MeleeLifetap + aabonuses.MeleeLifetap
 				+ spellbonuses.Vampirism + itembonuses.Vampirism + aabonuses.Vampirism;
+
+	if ((Hand == EQEmu::inventory::slotPrimary || Hand == EQEmu::inventory::slotRange) && glove != nullptr) {
+		lifetap_amt += glove->GetWornValue("Leech");
+	}
 
 	if(lifetap_amt && damage > 0){
 
