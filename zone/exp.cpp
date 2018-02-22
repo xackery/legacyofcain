@@ -910,7 +910,19 @@ void Client::UpdateSkillsAndSpells() {
 			continue;
 		}
 
-		int max_skill_level = database.GetSkillCap(GetClass(), (EQEmu::skills::SkillType)i, GetLevel());
+		// For weapon skills, use the warrior class max instead
+		int use_class = GetClass();
+		if (i == EQEmu::skills::Skill1HBlunt ||
+			i == EQEmu::skills::Skill1HSlashing ||
+			i == EQEmu::skills::Skill2HBlunt ||
+			i == EQEmu::skills::SkillArchery ||
+			i == EQEmu::skills::SkillHandtoHand||
+			i == EQEmu::skills::Skill1HPiercing ||
+			i == EQEmu::skills::Skill2HPiercing) {
+			use_class = WARRIOR;
+		}
+
+		int max_skill_level = database.GetSkillCap(use_class, (EQEmu::skills::SkillType)i, GetLevel());
 		if (max_skill_level > 0) {
 			SetSkill((EQEmu::skills::SkillType)i, max_skill_level);
 		}
