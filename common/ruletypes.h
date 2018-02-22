@@ -782,6 +782,8 @@ RULE_CATEGORY_END()
 
 RULE_CATEGORY(LoC)
 RULE_INT(LoC, ItemizationOtherClassTypeChance, 40) // Chance for loot to be randomized for other class types than the killer's class type
+RULE_INT(LoC, MinDamageDivider, 2)
+RULE_INT(LoC, MaxDamageDivider, 2)
 RULE_CATEGORY_END()
 
 #undef RULE_CATEGORY

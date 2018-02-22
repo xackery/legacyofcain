@@ -2296,6 +2296,8 @@ void NPC::CalcNPCDamage() {
 	min_dmg = (min_dmg * clfact) / 220;
 	max_dmg = (max_dmg * clfact) / 220;
 
+	min_dmg = min_dmg / RuleI(LoC, MinDamageDivider);
+	max_dmg = max_dmg / RuleI(LoC, MaxDamageDivider);
 	return;
 }
 
