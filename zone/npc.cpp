@@ -2255,17 +2255,11 @@ void NPC::CalcNPCDamage() {
 
 	int AC_adjust=12;
 
-	if (GetLevel() >= 66) {
-		if (min_dmg==0)
-			min_dmg = 220;
-		if (max_dmg==0)
-			max_dmg = ((((99000)*(GetLevel()-64))/400)*AC_adjust/10);
-	}
-	else if (GetLevel() >= 60 && GetLevel() <= 65){
+	if (GetLevel() >= 60){
 		if(min_dmg==0)
 			min_dmg = (GetLevel()+(GetLevel()/3));
-		if(max_dmg==0)
-			max_dmg = (GetLevel()*3)*AC_adjust/10;
+		if (max_dmg == 0) 
+			max_dmg = (GetLevel() * 3)*AC_adjust / 10;
 	}
 	else if (GetLevel() >= 51 && GetLevel() <= 59){
 		if(min_dmg==0)
