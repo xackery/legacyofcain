@@ -2250,7 +2250,6 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 	if (give_exp == nullptr)
 		give_exp = killer;
 
-	DoItemization(give_exp);
 	if (give_exp && give_exp->HasOwner()) {
 
 		bool ownerInGroup = false;
@@ -2276,11 +2275,14 @@ bool NPC::Death(Mob* killer_mob, int32 damage, uint16 spell, EQEmu::skills::Skil
 		}
 	}
 
+	
 	int PlayerCount = 0; // QueryServ Player Counting
 
 	Client *give_exp_client = nullptr;
 	if (give_exp && give_exp->IsClient())
 		give_exp_client = give_exp->CastToClient();
+
+	if (give_exp) DoItemization(give_exp);
 
 	//do faction hits even if we are a merchant, so long as a player killed us
 	if (give_exp_client && !RuleB(NPC, EnableMeritBasedFaction))
