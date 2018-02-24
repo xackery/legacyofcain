@@ -3093,6 +3093,7 @@ int NPC::GetItemRarity(Mob *killer) {
 	//Add Magic Find modifiers here. Killer is referenced as an argument, 
 	//so we can iterate group to calculate magic find bonuses, boosting non-common items.
 	int cha = killer->GetCHA();
+	if (cha > 255) cha = 255;
 	if (cha > 0) {
 		int mfMod = 3;
 		if (difficulty == LoC::Normal) mfMod = 3;
