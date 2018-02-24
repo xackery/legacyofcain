@@ -2857,7 +2857,7 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	if (cat == LoC::MobBoss) {
 		min_damage *= 4;
 		max_dmg *= 4;
-		max_hp *= 4;
+		max_hp *= 5;
 		size += 3.0f;
 		SetLastName("Boss");
 	}
