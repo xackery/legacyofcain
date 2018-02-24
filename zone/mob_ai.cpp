@@ -167,7 +167,7 @@ bool NPC::AICastSpell(Mob* tar, uint8 iChance, uint32 iSpellTypes, bool bInnates
 							&& tar->DontBuffMeBefore() < Timer::GetCurrentTime()
 							&& !tar->IsImmuneToSpell(AIspells[i].spellid, this)
 							&& tar->CanBuffStack(AIspells[i].spellid, GetLevel(), true) >= 0
-							&& !(tar->IsPet() && tar->GetOwner()->IsClient() && this != tar)	//no buffing PC's pets, but they can buff themself
+							&& !(tar->IsPet() && tar->GetOwner() && tar->GetOwner()->IsClient() && this != tar)	//no buffing PC's pets, but they can buff themself
 							)
 						{
 							if(!checked_los) {
