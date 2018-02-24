@@ -2862,6 +2862,8 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 		SetLastName("Boss");
 	}
 	SetHP(GetMaxHP());
+	npc_spells_id = 0;
+	npc_spells_effects_id = 0;
 
 	/*
 	roambox_delay = zone->random.Int(1000, 10000);
