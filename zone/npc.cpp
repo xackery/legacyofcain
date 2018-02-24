@@ -10362,6 +10362,15 @@ int NPC::GetItemProperty(int aug_index, int rarity, int slot_type, int class_typ
 	if (rarity == LoC::Legendary) { item_min += 8; item_max += 12; }
 	if (rarity == LoC::Unique) { item_min += 9; item_max += 15; }
 
+	
+	int weapon_min = item_min;
+	int weapon_max = item_max;
+	if (slot_type == LoC::SlotOneHB || slot_type == LoC::SlotOneHP || slot_type == LoC::SlotOneHS) {
+		//1 handers do half dmg
+		weapon_min /= 2;
+		weapon_max /= 2;
+	}
+
 	//don't add properties to lesser gear on farther aug indexes
 	if (rarity != LoC::Legendary && aug_index == 6) return 0; //no slot 5's on non-legendary
 	if ((rarity == LoC::Common || rarity == LoC::Uncommon) && aug_index == 5) return 0; //no skillmods on on common/uncommons.
@@ -10377,8 +10386,11 @@ int NPC::GetItemProperty(int aug_index, int rarity, int slot_type, int class_typ
 		if (rarity == LoC::Unique) { pid += 2000; pool[pid] = 0; }
 		if (rarity == LoC::Legendary) { pid += 500; pool[pid] = 0; }
 	}
+
 	for (auto&& i : items) {
-		if (i.level > item_max || i.level < item_min) continue;
+		if (i.slot_group_type == LoC::SlotGroupWeapons && (i.level > weapon_max || i.level < weapon_min)) continue;
+		if (i.slot_group_type != LoC::SlotGroupWeapons && (i.level > item_max || i.level < item_min)) continue;
+
 		if (aug_index != i.aug_index) continue;
 		if (i.slot_group_type == LoC::SlotGroupBody &&
 			slot_type != LoC::SlotChest &&
