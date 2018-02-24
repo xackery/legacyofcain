@@ -3155,6 +3155,36 @@ int32 NPC::AdjustExperience(int base_exp, Mob *killer) {
 	return exp;
 }
 
+void NPC::SpawnMinions(const NPCType *d) {
+	int cat = GetCategory();
+	if (cat == 0) return;
+	int count = 0;
+	if (cat == LoC::MobChampion) count = 2;
+	if (cat == LoC::MobRare) count = 3;
+	if (cat == LoC::MobUnique) count = 4;
+	if (cat == LoC::MobSuperUnique) count = 5;
+	if (cat == LoC::MobBoss) count = 1;
+	for (int i = 0; i < count; i++) {
+		auto pos = GetPosition();
+		pos.x += zone->random.Int(-10, 10);
+		pos.y += zone->random.Int(-10, 10);
+		NPC* npc = new NPC(d, nullptr, pos, FlyMode3);
+		
+		npc->SetOwnerID(GetID());
+		npc->max_hp = max_hp / 2;
+		npc->min_dmg = min_dmg / 2;
+		npc->max_dmg = max_dmg / 2;
+		npc->SetFollowID(GetID());
+		npc->SetFollowDistance(zone->random.Int(10, 50));
+		npc->SetLastName("Minion");
+		npc->roambox_delay = zone->random.Int(1000, 10000);
+		npc->roambox_min_delay = zone->random.Int(500, 1000);
+		npc->roambox_distance = zone->random.Int(5, 50);
+		npc->size -= zone->random.Real(0, 1);
+		entity_list.AddNPC(npc);
+	}
+
+}
 
 bool NPC::AddPrefix(int counter, int prefix) {
 	if (strlen(name) > 20) return false;

@@ -352,8 +352,8 @@ public:
 	int GetItemProperty(int aug_index, int rarity, int slot_type, int class_type, int item_level);
 	int GetDropCount(Mob * killer);
 	int GetItemRarity(Mob * killer);
-
 	int32 AdjustExperience(int base_exp, Mob * killer);
+	void SpawnMinions(const NPCType * d);
 
 	//waypoint crap
 	int					GetMaxWp() const { return max_wp; }

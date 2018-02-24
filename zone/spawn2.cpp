@@ -242,6 +242,7 @@ bool Spawn2::Process() {
 		npc->SaveGuardPointAnim(anim);
 		npc->SetAppearance((EmuAppearance)anim);
 		entity_list.AddNPC(npc);
+		npc->SpawnMinions(tmp);
 		//this limit add must be done after the AddNPC since we need the entity ID.
 		entity_list.LimitAddNPC(npc);
 			if(sg->roamdist && sg->roambox[0] && sg->roambox[1] && sg->roambox[2] && sg->roambox[3] && sg->delay && sg->min_delay)
