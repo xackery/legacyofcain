@@ -10405,11 +10405,22 @@ int NPC::GetItemProperty(int aug_index, int rarity, int slot_type, int class_typ
 	
 	int weapon_min = item_min;
 	int weapon_max = item_max;
+
+	//penalize non damage dealer weaps
+	if (class_type == LoC::Caster) { weapon_min -= 30; weapon_max -= 30; }
+	if (class_type == LoC::Support) { weapon_min -= 20; weapon_max -= 20; }
+	if (class_type == LoC::Tank) { weapon_min -= 10; weapon_max -= 10; }
+	
+	if (weapon_min < 2) weapon_min = 2;
+	if (weapon_max < 2) weapon_max = 4;
 	if (slot_type == LoC::SlotOneHB || slot_type == LoC::SlotOneHP || slot_type == LoC::SlotOneHS) {
 		//1 handers do half dmg
 		weapon_min /= 2;
 		weapon_max /= 2;
 	}
+
+	int tmp_level_min = item_min;
+	int tmp_level_max = item_max;
 
 	//don't add properties to lesser gear on farther aug indexes
 	if (rarity != LoC::Legendary && aug_index == 6) return 0; //no slot 5's on non-legendary
