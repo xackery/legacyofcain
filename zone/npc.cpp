@@ -2937,10 +2937,13 @@ void NPC::DoItemization(Mob *killer) {
 	
 	
 	int drop_count = GetDropCount(killer);	
-	if (drop_count == 0) return;
+	if (drop_count == 0) {
+		if (cat < 1) return;
+		drop_count = 1;
+	}
 	AddCash(zone->random.Int(0, GetLevel()), zone->random.Int(0, GetLevel() / 2), zone->random.Int(0, GetLevel() / 3), zone->random.Int(0, GetLevel() / 4));
 	if (cat > 0) AddCash(zone->random.Int(0, GetLevel()), zone->random.Int(0, GetLevel()), zone->random.Int(0, GetLevel() / 2), zone->random.Int(0, GetLevel() / 2));
-
+	
 	for (int i = 0; i < drop_count; i++) {
 		uint32 item_id = 0;
 		uint32 aug1_id = 0;
