@@ -2888,7 +2888,14 @@ void NPC::AddAbilities(const NPCType* d, Spawn2 *in_respawn) {
 	if (zone->GetInstanceID() == 2) prefixCount++;
 	int prefixTotal = 0;
 	int attempts = 0;
+	SetSpecialAbility(UNMEZABLE, 1);
+	SetSpecialAbility(UNCHARMABLE, 1);
 
+	if (cat == LoC::MobSuperUnique || cat == LoC::MobBoss) {
+		SetSpecialAbility(SPECATK_SUMMON, 1);		
+		SetSpecialAbility(IMMUNE_FEIGN_DEATH, 1);
+		SetSpecialAbility(SPECATK_RANGED_ATK, 1);
+	}
 	// This does not work as expected. Commenting out til it's implemented correctly.
 	// Remove leading "a " from name
 	//if (strncmp(GetName(), "a ", 2)) {
