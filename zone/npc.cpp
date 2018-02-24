@@ -2795,7 +2795,7 @@ void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	//stripping default spells
 	npc_spells_id = 0;
 	npc_spells_effects_id = 0;
-
+	if (cat > 0) npc_faction_id = 79; //make kos
 	//Level was determined based on the spawngroup, we now adjust it's level with category
 	int levelMod = 0;
 
