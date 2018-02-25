@@ -1482,7 +1482,7 @@ void command_npcstats(Client *c, const Seperator *sep)
 			c->Message(0, "Proximity: Disabled");
 		}
 		c->Message(0, "");
-		c->Message(0, "EmoteID: %i", target_npc->GetEmoteID());
+		c->Message(0, "EmoteID: %i, SpellID: %i", target_npc->GetEmoteID(), target_npc->GetNPCSpellsID());
 		c->Message(0, "MinDmg: %i, MaxDmg: %i", target_npc->GetMinDamage(), target_npc->GetMaxDMG());
 		target_npc->QueryLoot(c);
 	}
