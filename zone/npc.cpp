@@ -2705,6 +2705,9 @@ void NPC::Hijack(const NPCType* d, Spawn2* in_respawn) {
 
 	uint8 cat = RandomizeCategory(d, in_respawn);
 	ChangeCategory(cat);
+	//stripping default spells
+	npc_spells_id = 0;
+	npc_spells_effects_id = 0;
 	AdjustStats(d, in_respawn);
 	AddAbilities(d, in_respawn);
 	
@@ -2792,9 +2795,6 @@ uint8 NPC::RandomizeCategory(const NPCType* d, Spawn2* in_respawn) {
 void NPC::AdjustStats(const NPCType* d, Spawn2 *in_respawn) {
 	uint8 cat = GetCategory();
 
-	//stripping default spells
-	npc_spells_id = 0;
-	npc_spells_effects_id = 0;
 	if (cat > 0) npc_faction_id = 79; //make kos
 	//Level was determined based on the spawngroup, we now adjust it's level with category
 	int levelMod = 0;
@@ -3169,9 +3169,11 @@ void NPC::SpawnMinions(const NPCType *d) {
 		pos.x += zone->random.Int(-10, 10);
 		pos.y += zone->random.Int(-10, 10);
 		NPC* npc = new NPC(d, nullptr, pos, FlyMode3);
-		
-		npc->SetOwnerID(GetID());
+		npc->npc_spells_id = 0;
+		npc->npc_spells_effects_id = 0;
+		npc->SetOwnerID(GetID());		
 		npc->max_hp = max_hp / 2;
+		npc->SetHP(GetMaxHP());
 		npc->min_dmg = min_dmg / 2;
 		npc->max_dmg = max_dmg / 2;
 		npc->SetFollowID(GetID());
