@@ -10434,10 +10434,10 @@ int NPC::GetItemProperty(int aug_index, int rarity, int slot_type, int class_typ
 
 	if (aug_index == 5) { //all type 5's are rare, so chances of not getting one are pretty high.
 		if (rarity == LoC::Common) { pid += 10000; pool[pid] = 0; }
-		if (rarity == LoC::Uncommon) { pid += 9000; pool[pid] = 0; }
-		if (rarity == LoC::Rare) { pid += 5000; pool[pid] = 0; }
-		if (rarity == LoC::Unique) { pid += 2000; pool[pid] = 0; }
-		if (rarity == LoC::Legendary) { pid += 500; pool[pid] = 0; }
+		if (rarity == LoC::Uncommon) { pid += 9000; pool[pid] = 0; } //you shouldn't see epics on uncommon or worse
+		if (rarity == LoC::Rare) { pid += 5000; pool[pid] = 0; } //keeping 5k+ rare
+		if (rarity == LoC::Unique) { pid += (400 - (GetLevel() * 2)) + 100; pool[pid] = 0; } //2k too high
+		if (rarity == LoC::Legendary) { pid +=  (200 - (GetLevel()*2)) + 40; pool[pid] = 0; } //500 too high
 	}
 
 	for (auto&& i : items) {
