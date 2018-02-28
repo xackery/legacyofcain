@@ -3156,6 +3156,7 @@ int32 NPC::AdjustExperience(int base_exp, Mob *killer) {
 }
 
 void NPC::SpawnMinions(const NPCType *d) {
+	return;
 	int cat = GetCategory();
 	if (cat == 0) return;
 	int count = 0;
